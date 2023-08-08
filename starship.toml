@@ -1,0 +1,41 @@
+format = """
+$time\
+$username\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$kubernetes\
+$rust\
+$go\
+$cmd_duration\
+$line_break\
+$character"""
+
+[kubernetes]
+disabled=false
+
+[username]
+format = '[$user]($style): '
+
+[character]
+success_symbol = "[:;](bold green)"
+error_symbol = "[:;](bold red)"
+
+[time]
+disabled = true
+time_format = "%R" # Hour:Minute Format
+style = "cyan"
+format = '[\[$time\] ]($style)'
+
+[rust]
+format = "| [$symbol($version )]($style)"
+symbol = "rs: "
+
+[golang]
+format = "| [$symbol($version)($style)]"
+symbol = "go: "
+
+[lua]
+format = '| [$symbol($version)]($style) '
+symbol = "lua: "
