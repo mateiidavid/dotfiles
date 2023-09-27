@@ -8,11 +8,13 @@ require('mappings').core_bindings()
 --cmd([[colorscheme catppuccin]])
 
 --vim.cmd([[command! Bufs :buffers]])
-vim.api.nvim_create_autocmd({ 'BufWritePre' }, { pattern = { '*.lua' }, command = 'Format' })
-vim.api.nvim_create_autocmd(
-  { 'BufWritePre' },
-  { pattern = { '*.rs', '*.go', '*.c' }, callback = vim.lsp.buf.formatting_sync }
-)
+vim.api.nvim_create_autocmd({ 'BufWritePre' }, { pattern = { '*.lua' }, command = ':Format' })
+vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
+  pattern = { '*.rs', '*.go', '*.c' },
+  callback = function()
+    vim.lsp.buf.formatting_sync()
+  end,
+})
 
 vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
   pattern = { '*.c' },
