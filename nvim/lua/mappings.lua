@@ -94,6 +94,12 @@ function M.lsp_bindings(bufnr)
       rhs = "<cmd>lua require('lsp_lines').toggle()<CR>",
       opts = opts,
     },
+    {
+      mode = 'n',
+      lhs = '<leader>hd',
+      rhs = ':Gitsigns diffthis main<CR>',
+      opts = opts,
+    },
   }
   utils.buf_set_keymaps(bufnr, buf_keys)
 end

@@ -90,7 +90,13 @@ local function mk_lsp_cfg(mk_default, on_attach_fn, lsp_capabilities_fn)
       },
     },
     rust_analyzer = mk_default(),
-    ccls = mk_default(),
+    ccls = mk_default({
+      init_options = {
+        cache = {
+          directory = '.ccls-cache',
+        },
+      },
+    }),
     lua_ls = {
       on_attach = on_attach_fn,
       capabilities = lsp_capabilities_fn,
@@ -126,12 +132,28 @@ local function lsp_init()
     -- Remove 't'? added 'q', 'j'
     buf_set_option('formatoptions', 'c' .. 'r' .. 'q' .. 'b' .. 'j')
   end
-  local mk_default_lsp = function()
-    return {
+
+  -- Inject default on_attach and capabilities and optionally a set of settings
+  -- received as a table
+  local mk_default_lsp = function(opt)
+    if opt == nil or next(opt) == nil then
+      return {
+        on_attach = on_attach,
+        capabilities = lsp_capabilities,
+      }
+    end
+
+    local unpacked_opt = {
       on_attach = on_attach,
       capabilities = lsp_capabilities,
     }
+    for k, v in pairs(opt) do
+      unpacked_opt[k] = v
+    end
+
+    return unpacked_opt
   end
+
   local cfg = mk_lsp_cfg(mk_default_lsp, on_attach, lsp_capabilities)
   for k, v in pairs(cfg) do
     lspconfig[k].setup(v)
