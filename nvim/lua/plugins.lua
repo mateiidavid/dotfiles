@@ -87,18 +87,27 @@ local function lualine_setup()
       icons_enabled = true,
       --theme = 'palenight',
       --theme = 'rose-pine',
-      theme = 'rose-pine-alt',
+      --theme = 'rose-pine-alt',
+      --theme = 'auto',
+      theme = 'seoul256',
       --component_separators = { left = '', right = ''},
       component_separators = { left = ' ', right = ' ' },
       section_separators = { left = '', right = '' },
       disabled_filetypes = {},
       always_divide_middle = true,
-      globalstatus = false,
+      globalstatus = true,
     },
     sections = {
       lualine_a = { 'mode' },
       lualine_b = { 'branch', 'diff' },
       lualine_c = {
+        {
+          'buffers',
+          show_filename_only = true,
+          hide_filename_extension = true,
+          mode = 4,
+          max_length = vim.o.columns * 2 / 3,
+        },
         {
           'filename',
           file_status = true,
@@ -133,6 +142,52 @@ local function bufferline_setup()
     },
   })
 end
+
+local function rosepine_setup()
+  require('rose-pine').setup({
+    dark_variant = 'main',
+    groups = {
+      background = 'base',
+      background_nc = '_experimental_nc',
+      panel = 'surface',
+      panel_nc = 'base',
+      border = 'highlight_med',
+      comment = 'muted',
+      link = 'iris',
+      punctuation = 'subtle',
+
+      error = 'love',
+      hint = 'iris',
+      info = 'foam',
+      warn = 'gold',
+
+      headings = {
+        h1 = 'iris',
+        h2 = 'foam',
+        h3 = 'rose',
+        h4 = 'gold',
+        h5 = 'pine',
+        h6 = 'foam',
+      },
+
+      -- or set all headings at once
+      -- headings = 'subtle'
+    },
+
+    -- Change specific vim highlight groups
+    -- https://github.com/rose-pine/neovim/wiki/Recipes
+    highlight_groups = {
+      ColorColumn = { bg = 'highlight_high' },
+
+      -- Blend colours against the "base" background
+      CursorLine = { bg = 'foam', blend = 10 },
+      IncSearch = { bg = 'highlight_mid' },
+      lCursor = { bg = 'gold' },
+    },
+  })
+  vim.api.nvim_command('colorscheme rose-pine')
+end
+
 -- //
 -- // Packer
 -- //
@@ -195,50 +250,8 @@ return require('packer').startup(function(use)
   use({
     'rose-pine/neovim',
     as = 'rose-pine',
-    config = function()
-      require('rose-pine').setup({
-        dark_variant = 'main',
-        groups = {
-          background = 'base',
-          background_nc = '_experimental_nc',
-          panel = 'surface',
-          panel_nc = 'base',
-          border = 'highlight_med',
-          comment = 'muted',
-          link = 'iris',
-          punctuation = 'subtle',
-
-          error = 'love',
-          hint = 'iris',
-          info = 'foam',
-          warn = 'gold',
-
-          headings = {
-            h1 = 'iris',
-            h2 = 'foam',
-            h3 = 'rose',
-            h4 = 'gold',
-            h5 = 'pine',
-            h6 = 'foam',
-          },
-
-          -- or set all headings at once
-          -- headings = 'subtle'
-        },
-
-        -- Change specific vim highlight groups
-        -- https://github.com/rose-pine/neovim/wiki/Recipes
-        highlight_groups = {
-          ColorColumn = { bg = 'highlight_high' },
-
-          -- Blend colours against the "base" background
-          CursorLine = { bg = 'foam', blend = 10 },
-          IncSearch = { bg = 'highlight_mid' },
-          lCursor = { bg = 'gold' },
-        },
-      })
-      vim.api.nvim_command('colorscheme rose-pine')
-    end,
+    -- not in use rn
+    config = function() end,
   })
   use({
     'catppuccin/nvim',
@@ -247,6 +260,31 @@ return require('packer').startup(function(use)
       --vim.g.catppuccin_flavour = 'macchiato' -- latte, frappe, macchiato, mocha
       --require('catppuccin').setup()
       --vim.api.nvim_command('colorscheme catppuccin')
+    end,
+  })
+
+  use({
+    'rebelot/kanagawa.nvim',
+    as = 'kanagawa',
+    config = function()
+      require('kanagawa').setup({
+        compile = false, -- enable compiling the colorscheme
+        undercurl = true, -- enable undercurls
+        --commentStyle = { italic = false },
+        functionStyle = {},
+        keywordStyle = { italic = false },
+        statementStyle = { bold = true },
+        typeStyle = {},
+        transparent = false, -- do not set background color
+        dimInactive = true, -- dim inactive window `:h hl-NormalNC`
+        terminalColors = true, -- define vim.g.terminal_color_{0,17}
+        theme = 'wave', -- Load "wave" theme when 'background' option is not set
+        background = { -- map the value of 'background' option to a theme
+          dark = 'wave', -- try "dragon" !
+          light = 'lotus',
+        },
+      })
+      vim.api.nvim_command('colorscheme kanagawa')
     end,
   })
 
