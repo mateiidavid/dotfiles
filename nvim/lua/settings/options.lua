@@ -36,17 +36,18 @@ local function load_options()
     diffopt = 'vertical,algorithm:patience,indent-heuristic,context:10',
     showtabline = 0, -- 0 is never, 2 is always,
     cursorline = true,
+    grepprg = 'rg',
     --
   }
 
   local bufw_local = {
     undofile = true,
-    expandtab = true,
+    expandtab = true, -- spaces, not tabs
     autoindent = true,
     smartindent = true,
     tabstop = 4,
-    softtabstop = 2,
-    shiftwidth = 2,
+    softtabstop = 4,
+    shiftwidth = 4,
     number = true,
     relativenumber = true,
     colorcolumn = 100,
@@ -60,4 +61,6 @@ local function load_options()
   bind_options(bufw_local)
 end
 
-load_options()
+return {
+  init = load_options,
+}

@@ -68,6 +68,7 @@ local function treesitter_setup()
       'fish',
       'html',
       'json',
+      'haskell',
     }, -- one
     -- of "all", "maintained" (parsers with maintainers), or a list of languages
     ignore_install = {}, -- List of parsers to ignore installing
@@ -85,11 +86,13 @@ local function lualine_setup()
   require('lualine').setup({
     options = {
       icons_enabled = true,
+      theme = 'rose-pine',
+      --theme = 'dracula',
       --theme = 'palenight',
-      --theme = 'rose-pine',
       --theme = 'rose-pine-alt',
       --theme = 'auto',
-      theme = 'seoul256',
+      --theme = 'seoul256',
+      --theme = 'codedark',
       --component_separators = { left = '', right = ''},
       component_separators = { left = ' ', right = ' ' },
       section_separators = { left = '', right = '' },
@@ -103,17 +106,19 @@ local function lualine_setup()
       lualine_c = {
         {
           'buffers',
-          show_filename_only = true,
+          show_filename_only = false,
           hide_filename_extension = true,
           mode = 4,
           max_length = vim.o.columns * 2 / 3,
         },
+        --[[
         {
           'filename',
           file_status = true,
           path = 1, -- 1 is relative, 2 is abs
           shorting_target = 50,
         },
+        --]]
       },
       lualine_x = { 'diagnostics' },
       lualine_y = { 'encoding', 'fileformat', 'filetype' },
@@ -194,7 +199,8 @@ end
 return require('packer').startup(function(use)
   use('wbthomason/packer.nvim') -- packer can manage itself, better it autoupdates I guess
 
-  use('/home/matei/workspace/side-projects/blame.nvim')
+  --use('/home/matei/workspace/side-projects/blame.nvim')
+  use('/home/matei/workspace/sandbox/nvim-plugins/jottylist')
   -- --- LSP Config --
   use('neovim/nvim-lspconfig') -- lspconfig
   use('simrat39/rust-tools.nvim')

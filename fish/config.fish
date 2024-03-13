@@ -12,6 +12,7 @@ alias tmx='tmux attach || tmux new'
 alias ls='exa --icons'
 alias la='exa -la --icons --colour-scale'
 alias ll='exa -abghHli --icons'
+alias dff='duf'
 
 # Ripgrep&FZF
 # RTFM man fzf
