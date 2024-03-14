@@ -1,8 +1,8 @@
 # Greetings my good sir
-function fish_greeting
-   printf '\n\n'
-   fortune 
-end
+#function fish_greeting
+#   printf '\n\n'
+#   fortune 
+#end
 
 # Aliases
 alias gst='git status'
