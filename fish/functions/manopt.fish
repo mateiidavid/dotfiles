@@ -25,7 +25,7 @@
 #   manopt sort reverse   # same as: manopt sort --reverse
 #   manopt find -print    # MUST prefix with '-' here.
 #   manopt find '-exec.*' # find options *starting* with '-exec'
-function manopt()
+function manopt --description 'Display information about a `man` flag'
   # Get fn args in local vars
   set -l cmd $argv[1]
   # Arg we want to look up in man page
@@ -38,7 +38,7 @@ function manopt()
       set opt "--$opt"
     end
   end
-  man "$cmd" | col -b | awk -v opt="$opt" -v RS = '$0 ~ "(^|,)[[:blank:]]+" opt "([[:punct:][:space:]]|$)"'
+  man "$cmd" | col -b | awk -v opt="$opt" -v RS= '$0 ~ "(^|,)[[:blank:]]+" opt "([[:punct:][:space:]]|$)"'
 end
 
 # Credits:

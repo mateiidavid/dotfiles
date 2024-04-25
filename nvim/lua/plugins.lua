@@ -150,45 +150,79 @@ end
 
 local function rosepine_setup()
   require('rose-pine').setup({
-    dark_variant = 'main',
+    dark_variant = 'moon',
+    dim_inactive_windows = true,
+
     groups = {
-      background = 'base',
-      background_nc = '_experimental_nc',
-      panel = 'surface',
-      panel_nc = 'base',
-      border = 'highlight_med',
-      comment = 'muted',
+      border = 'muted',
       link = 'iris',
-      punctuation = 'subtle',
+      panel = 'surface',
 
       error = 'love',
       hint = 'iris',
       info = 'foam',
+      note = 'pine',
+      todo = 'rose',
       warn = 'gold',
 
-      headings = {
-        h1 = 'iris',
-        h2 = 'foam',
-        h3 = 'rose',
-        h4 = 'gold',
-        h5 = 'pine',
-        h6 = 'foam',
-      },
+      git_add = 'foam',
+      git_change = 'rose',
+      git_delete = 'love',
+      git_dirty = 'rose',
+      git_ignore = 'muted',
+      git_merge = 'iris',
+      git_rename = 'pine',
+      git_stage = 'iris',
+      git_text = 'rose',
+      git_untracked = 'subtle',
 
-      -- or set all headings at once
-      -- headings = 'subtle'
+      h1 = 'iris',
+      h2 = 'foam',
+      h3 = 'rose',
+      h4 = 'gold',
+      h5 = 'pine',
+      h6 = 'foam',
     },
+
+    enable = {
+      terminal = true,
+      legacy_highlights = true, -- Improve compatibility for previous versions of Neovim
+      migrations = true, -- Handle deprecated options automatically
+    },
+
+    styles = {
+      bold = true,
+      italic = true,
+      transparency = false,
+    },
+
+    highlight_groups = {
+      -- Comment = { fg = "foam" },
+      -- VertSplit = { fg = "muted", bg = "muted" },
+    },
+
+    before_highlight = function(group, highlight, palette)
+      -- Disable all undercurls
+      -- if highlight.undercurl then
+      --     highlight.undercurl = false
+      -- end
+      --
+      -- Change palette colour
+      -- if highlight.fg == palette.pine then
+      --     highlight.fg = palette.foam
+      -- end
+    end,
 
     -- Change specific vim highlight groups
     -- https://github.com/rose-pine/neovim/wiki/Recipes
-    highlight_groups = {
-      ColorColumn = { bg = 'highlight_high' },
+    --highlight_groups = {
+    -- ColorColumn = { bg = 'highlight_high' },
 
-      -- Blend colours against the "base" background
-      CursorLine = { bg = 'foam', blend = 10 },
-      IncSearch = { bg = 'highlight_mid' },
-      lCursor = { bg = 'gold' },
-    },
+    -- Blend colours against the "base" background
+    --CursorLine = { bg = 'foam', blend = 10 },
+    --IncSearch = { bg = 'highlight_mid' },
+    --lCursor = { bg = 'gold' },
+    --},
   })
   vim.api.nvim_command('colorscheme rose-pine')
 end
@@ -200,7 +234,7 @@ return require('packer').startup(function(use)
   use('wbthomason/packer.nvim') -- packer can manage itself, better it autoupdates I guess
 
   --use('/home/matei/workspace/side-projects/blame.nvim')
-  use('/home/matei/workspace/sandbox/nvim-plugins/jottylist')
+  --use('/home/matei/workspace/sandbox/nvim-plugins/jottylist')
   -- --- LSP Config --
   use('neovim/nvim-lspconfig') -- lspconfig
   use('simrat39/rust-tools.nvim')
@@ -257,7 +291,7 @@ return require('packer').startup(function(use)
     'rose-pine/neovim',
     as = 'rose-pine',
     -- not in use rn
-    config = function() end,
+    config = rosepine_setup,
   })
   use({
     'catppuccin/nvim',
@@ -290,7 +324,7 @@ return require('packer').startup(function(use)
           light = 'lotus',
         },
       })
-      vim.api.nvim_command('colorscheme kanagawa')
+      --vim.api.nvim_command('colorscheme kanagawa')
     end,
   })
 

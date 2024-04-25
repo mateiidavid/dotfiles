@@ -10,6 +10,7 @@ $rust\
 $go\
 $cmd_duration\
 $line_break\
+$jobs\
 $character"""
 
 [kubernetes]
@@ -39,3 +40,8 @@ symbol = "go: "
 [lua]
 format = '| [$symbol($version)]($style) '
 symbol = "lua: "
+
+[jobs]
+symbol = '✦ '
+number_threshold = 2
+symbol_threshold = 1
