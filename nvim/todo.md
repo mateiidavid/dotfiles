@@ -1,0 +1,5 @@
+- [ ] switch package manager to `lazy`
+- [ ] small plugin around :file to display it in a nicer way?
+- [ ] lualine fix all those annoying bufs
+- [ ] separate config in a more modular way
+- [ ] gitblame plugin
