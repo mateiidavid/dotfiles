@@ -150,7 +150,7 @@ end
 
 local function rosepine_setup()
   require('rose-pine').setup({
-    dark_variant = 'moon',
+    dark_variant = 'moon', -- when auto is used, theme changes depending on vim.o.background
     dim_inactive_windows = true,
 
     groups = {
@@ -224,7 +224,7 @@ local function rosepine_setup()
     --lCursor = { bg = 'gold' },
     --},
   })
-  --vim.api.nvim_command('colorscheme rose-pine')
+  vim.api.nvim_command('colorscheme rose-pine')
 end
 
 -- //
@@ -324,7 +324,7 @@ return require('packer').startup(function(use)
           light = 'lotus',
         },
       })
-      vim.api.nvim_command('colorscheme kanagawa')
+      --vim.api.nvim_command('colorscheme kanagawa')
     end,
   })
 
