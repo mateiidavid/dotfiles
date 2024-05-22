@@ -12,6 +12,7 @@ function M.core_bindings()
     { mode = 'n', lhs = '<C-l>', rhs = ':wincmd l<CR>', opts = { noremap = true } },
     { mode = 'n', lhs = '<leader>c', rhs = ':bd <CR>', opts = { noremap = true } },
     { mode = 'n', lhs = ';;', rhs = ':vert help quickref<CR>', opts = { noremap = true } },
+    { mode = 'n', lhs = '"+y', rhs = '<leader>y', opts = { noremap = true } },
   })
 end
 function M.telescope_bindings()

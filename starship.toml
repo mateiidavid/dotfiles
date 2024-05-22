@@ -1,3 +1,9 @@
+right_format = """
+$golang\
+$rust\
+$lua\
+$kubernetes"""
+
 format = """
 $username\
 $directory\
@@ -7,7 +13,6 @@ $line_break\
 $jobs\
 $character"""
 
-right_format = """$kubernetes$go$rust$lua"""
 
 [directory]
 truncation_length = 1
@@ -17,7 +22,8 @@ style = "blue"
 
 [kubernetes]
 format = '[$symbol$context ]($style)'
-disabled=false
+style = "blue"
+disabled = false
 
 [username]
 format = '[$user: ]($style)'
@@ -47,6 +53,7 @@ symbol = " "
 [golang]
 symbol = " "
 format = "[$symbol($version )]($style)"
+style = "bright-blue"
 
 [git_branch]
 format = "[$branch]($style)"
