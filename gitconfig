@@ -1,0 +1,28 @@
+[user]
+    name = Matei David
+    email = typedfrog@proton.me
+
+# $HOME/.gitconfig
+[alias]
+    # Usage: git latest-tag <stable|edge>
+    # Example:
+    #  git latest-tag 'stable*'
+    #  git latest-tag 'stable-2.13*'
+    #  git latest-tag 'edge*'
+    #  git latest-tag 'edge-23.10*'
+    latest-tag = "!git tag -l \"$1\" --sort=-"v:refname" | head -n 1 #"
+
+[core]
+	hooksPath = /home/matei/.config/git/hooks
+	editor = nvim
+[init]
+	defaultBranch = main
+[pull]
+    rebase = false
+#
+#[url "ssh://git@github.com/"]
+#	insteadOf = https://github.com/
+[credential]
+    helper = cache --timeout 31536000
+    # helper = store
+
