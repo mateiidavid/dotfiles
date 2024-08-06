@@ -1,8 +1,9 @@
-right_format = """
-$golang\
-$rust\
-$lua\
-$kubernetes"""
+
+#right_format = """
+#$golang\
+#$rust\
+#$lua\
+#$kubernetes"""
 
 format = """
 $username\
@@ -26,7 +27,7 @@ style = "blue"
 disabled = false
 
 [username]
-format = '[$user: ]($style)'
+format = '[$user ]($style)'
 style_user = "bold #eb6f92"
 
 [character]
