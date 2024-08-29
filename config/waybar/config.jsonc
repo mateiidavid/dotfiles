@@ -1,28 +1,76 @@
 // -*- mode: jsonc -*-
 {
+    /* LAYOUT */
     "layer": "top", // Waybar at top layer
     "position": "top", // Waybar position (top|bottom|left|right)
+    "reload_style_on_change": true,
+    "font": "JetBrains Nerd Font Mono",
     "height": 30, // Waybar height (to be removed for auto height)
     // "width": 1280, // Waybar width
     "spacing": 10, // Gaps between modules (4px)
-    "modules-left": ["hyprland/workspaces", "hyprland/submap"],
+    "modules-left": [
+	    "group/quicklinks-left",
+	    "hyprland/workspaces",
+	    "wlr/taskbar"
+	    //"hyprland/window"
+    ],
     "modules-center": ["clock"],
     // Choose the order of the modules
     "modules-right": [
         "pulseaudio",
         "network",
         "battery",
-        "tray"
+	"group/power-menu"
     ],
     //"margin-right": 10,
     //"margin-left": 10,
     //"margin-top": 10,
     "margin": "20 20 0 20",
+
+    /* MODULES */
     // Modules configuration
+
+    // LEFT
+    "group/quicklinks-left": {
+    	"orientation": "horizontal",
+    	"modules": [
+	  "custom/launcher",
+          "custom/terminal",
+          "custom/browser"
+	]
+     },
+
+     "image": {
+	"path": "/var/images/arch-linux-logo.png",
+	"on-click": "wofi --show drun",
+	"size": 20
+     },
+
+     "custom/launcher": {
+	"format": "󰣇",
+	"tooltip": true,
+	"tooltip-format": "launcher",
+	"on-click": "wofi --show drun"
+     },
+     "custom/terminal": {
+	"format": "",
+	"tooltip": true,
+	"tooltip-format": "open term",
+	"on-click": "kitty"
+     },
+
+     "custom/browser": {
+	"format": "",
+	"tooltip": true,
+	"tooltip-format": "open firefox",
+	"on-click": "firefox"
+     },
+
     "hyprland/workspaces": {
-    //  "disable-scroll": true,
-    //  "all-outputs": true,
-    //  "warp-on-scroll": false,
+        "disable-scroll": true,
+	"sort-by": "number",
+        "all-outputs": true,
+        "warp-on-scroll": false,
     	"format": "{icon}", // default {id}
         "format-icons": {
              "1:term": "",
@@ -32,12 +80,77 @@
              "urgent": "",
              "active": "",
              "default": ""
+	     /*
+	     "1": "",
+	     "2": "",
+	     "3": "",
+             "urgent": "",
+             "active": "",
+             "default": ""
+	     */
          }
     },
+    "hyprland/window": {
+	"format": "{title}",
+	"icon": true,
+	"icon-size": 20,
+	"max-length": 30,
+	"separate-outputs": true,
+	"rewrite": {
+	  "(.*) - Brave": "$1"
+	}
+    },
+
+    // CENTER
     "clock": {
         //"format": "{:%Y-%m-%d %H:%M}",
 	//"format-alt": "{:%Y-%m-%d}",
-	"format": "{:%a, %d %b, %I:%M %p}"
+	"format": " {:%a, %d %b, %I:%M %p}"
+    },
+
+    // RIGHT
+    "group/power-menu": {
+    	"orientation": "inherit",
+	"click-to-reveal": false,
+    	"drawer": {
+          "transition-duration": 500,
+          "children-class": "power-child",
+          "transition-left-to-right": true
+    	},
+    	"modules": [
+          "custom/power", // First element is the "group leader" and won't ever be hidden
+          "custom/lock",
+	  "custom/reboot",
+	  "custom/logout"
+	]
+     },
+
+    "custom/power": {
+	"format": "󰐦",
+	"tooltip": true,
+	"tooltip-format": "shutdown",
+	"on-click": "shutdown now"
+    },
+
+    "custom/lock": {
+	"format": "",
+	"tooltip": true,
+	"tooltip-format": "lock screen session",
+	"on-click": "hyprlock"
+    },
+
+    "custom/reboot": {
+	"format": "󰜉",
+	"tooltip": true,
+	"tooltip-format": "reboot",
+	"on-click": "reboot"
+    },
+
+    "custom/logout": {
+	"format": "󰿅",
+	"tooltip": true,
+	"tooltip-format": "logout",
+	"on-click": "hyprctl dispatch exit"
     },
     "tray": {
         "icon-size": 21,
@@ -55,12 +168,12 @@
         // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
         "critical-threshold": 80,
         // "format-critical": "{temperatureC}°C {icon}",
-        "format": "{temperatureC}°C {icon}",
+        "format": "{icon}  {temperatureC}°C",
         "format-icons": ["", "", ""]
     },
     "backlight": {
         // "device": "acpi_video1",
-        "format": "{percent}% {icon}",
+        "format": "{icon}  {percent}%",
         "format-icons": ["", "", "", "", "", "", "", "", ""]
     },
     "battery": {
@@ -69,18 +182,19 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{capacity}% {icon}",
-        "format-full": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ",
-        "format-plugged": "{capacity}% ",
+        "format": "{icon}{capacity}%",
+        "format-full": "{icon}{capacity}%",
+        "format-charging": "  {capacity}%",
+        "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
         // "format-good": "", // An empty format will hide the module
         // "format-full": "",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": [" ", " ", " ", " ", "  "]
     },
     "network": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "{essid} ({signalStrength}%) ",
+        //"format-wifi": "   {essid} ({signalStrength}%) ",
+	"format-wifi": " {essid}",
         "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format": "{ifname} via {gwaddr} ",
         "format-linked": "{ifname} (No IP) ",
@@ -89,7 +203,7 @@
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon}",
+        "format": "{icon} {volume}%",
         "format-bluetooth": "{volume}% {icon}",
         "format-bluetooth-muted": " {icon} {format_source}",
         "format-source-muted": "",
