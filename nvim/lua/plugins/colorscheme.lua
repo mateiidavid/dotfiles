@@ -1,55 +1,6 @@
-
--- === THEMES ===
-
-local rosepine = {
-    'rose-pine/neovim',
-    lazy = false,
-    priority = 1000,
-    opts = rosepine_setup()
-    config = function()
-        vim.api.nvim_command('colorscheme rosepine')
-    end
-}
-
-local catppuccin = {
-    "catppuccin/nvim",
-    lazy = false, -- make sure we load this during startup if it is your main colorscheme
-    priority = 1000, -- make sure to load this before all the other start plugins
-    config = function()
-      -- load the colorscheme here
-      vim.api.nvim_command('colorscheme catppuccin')
-    end,
-}
-
-local kanagawa = {
-    "rebelot/kanagawa.nvim",
-    lazy = false, 
-    priority = 1000, 
-    opts = {
-      compile = false,
-      undercurl = true,
-      functionStyle = {},
-      keywordStyle = { italic = false },
-      statementStyle = { bold = true },
-      typeStyle = {},
-      transparent = false, -- do not set background color
-      dimInactive = true, -- dim inactive window `:h hl-NormalNC`
-      terminalColors = true, -- define vim.g.terminal_color_{0,17}
-      theme = 'wave', -- Load "wave" theme when 'background' option is not set
-      background = { -- map the value of 'background' option to a theme
-        dark = 'wave', -- try "dragon" !
-        light = 'lotus',
-      }
-    },
-    config = function()
-      -- load the colorscheme here
-      vim.api.nvim_command('colorscheme kanagawa')
-    end,
-}
-
 -- === UTIL CTORs ===
 
-local function rosepine_setup()
+local rosepine_setup = function()
   return {
     dark_variant = 'moon', -- when auto is used, theme changes depending on vim.o.background
     dim_inactive_windows = true,
@@ -126,6 +77,54 @@ local function rosepine_setup()
     --},
   }
 end
+-- === THEMES ===
+
+local rosepine = {
+    'rose-pine/neovim',
+    lazy = false,
+    priority = 1000,
+    opts = rosepine_setup(),
+    config = function()
+        vim.api.nvim_command('colorscheme rosepine')
+    end
+}
+
+local catppuccin = {
+    "catppuccin/nvim",
+    lazy = false, -- make sure we load this during startup if it is your main colorscheme
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      -- load the colorscheme here
+      vim.api.nvim_command('colorscheme catppuccin')
+    end,
+}
+
+local kanagawa = {
+    "rebelot/kanagawa.nvim",
+    lazy = false, 
+    priority = 1000, 
+    opts = {
+      compile = false,
+      undercurl = true,
+      functionStyle = {},
+      keywordStyle = { italic = false },
+      statementStyle = { bold = true },
+      typeStyle = {},
+      transparent = false, -- do not set background color
+      dimInactive = true, -- dim inactive window `:h hl-NormalNC`
+      terminalColors = true, -- define vim.g.terminal_color_{0,17}
+      theme = 'wave', -- Load "wave" theme when 'background' option is not set
+      background = { -- map the value of 'background' option to a theme
+        dark = 'wave', -- try "dragon" !
+        light = 'lotus',
+      }
+    },
+    config = function()
+      -- load the colorscheme here
+      vim.api.nvim_command('colorscheme kanagawa')
+    end,
+}
+
 
 return {
   -- the colorscheme should be available when starting Neovim
