@@ -17,10 +17,10 @@
     "modules-center": ["clock"],
     // Choose the order of the modules
     "modules-right": [
-        "pulseaudio",
+        "group/sound",
         "network",
         "battery",
-	"group/power-menu"
+    	"group/power-menu"
     ],
     //"margin-right": 10,
     //"margin-left": 10,
@@ -34,41 +34,43 @@
     "group/quicklinks-left": {
     	"orientation": "horizontal",
     	"modules": [
-	  "custom/launcher",
+	      "custom/launcher",
           "custom/terminal",
           "custom/browser"
-	]
+	    ]
      },
 
+     // unused
      "image": {
-	"path": "/var/images/arch-linux-logo.png",
-	"on-click": "wofi --show drun",
-	"size": 20
+        "path": "/var/images/arch-linux-logo.png",
+        "on-click": "wofi --show drun",
+        "size": 20
      },
 
      "custom/launcher": {
-	"format": "󰣇",
-	"tooltip": true,
-	"tooltip-format": "launcher",
-	"on-click": "wofi --show drun"
+        "format": "󰣇",
+        "tooltip": true,
+        "tooltip-format": "launcher",
+        "on-click": "wofi --show drun"
      },
+
      "custom/terminal": {
-	"format": "",
-	"tooltip": true,
-	"tooltip-format": "open term",
-	"on-click": "kitty"
+        "format": "",
+        "tooltip": true,
+        "tooltip-format": "open term",
+        "on-click": "kitty"
      },
 
      "custom/browser": {
-	"format": "",
-	"tooltip": true,
-	"tooltip-format": "open firefox",
-	"on-click": "firefox"
+        "format": "",
+        "tooltip": true,
+        "tooltip-format": "open firefox",
+        "on-click": "firefox"
      },
 
     "hyprland/workspaces": {
         "disable-scroll": true,
-	"sort-by": "number",
+	    "sort-by": "number",
         "all-outputs": true,
         "warp-on-scroll": false,
     	"format": "{icon}", // default {id}
@@ -91,27 +93,48 @@
          }
     },
     "hyprland/window": {
-	"format": "{title}",
-	"icon": true,
-	"icon-size": 20,
-	"max-length": 30,
-	"separate-outputs": true,
-	"rewrite": {
-	  "(.*) - Brave": "$1"
-	}
+        "format": "{title}",
+        "icon": true,
+        "icon-size": 20,
+        "max-length": 30,
+        "separate-outputs": true,
+        "rewrite": {
+          "(.*) - Brave": "$1"
+        }
     },
 
     // CENTER
     "clock": {
         //"format": "{:%Y-%m-%d %H:%M}",
 	//"format-alt": "{:%Y-%m-%d}",
-	"format": " {:%a, %d %b, %I:%M %p}"
+	"format": "  {:%a, %d %b, %I:%M %p}"
     },
 
     // RIGHT
+    "group/sound": {
+    	"orientation": "horizontal",
+    	"modules": [
+	      "custom/media",
+          "pulseaudio"
+	    ]
+    },
+
+    "custom/media": {
+        "format": "{icon} {}",
+        "return-type": "json",
+        "max-length": 40,
+        "format-icons": {
+            "spotify": "",
+            "default": "󰎆"
+        },
+        "escape": true,
+        "exec": "$HOME/.config/waybar/scripts/mediaplayer.py 2> /dev/null"
+        // "exec": "$HOME/.config/waybar/mediaplayer.py --player spotify 2> /dev/null" // Filter player based on name
+    },
+
     "group/power-menu": {
     	"orientation": "inherit",
-	"click-to-reveal": false,
+	    "click-to-reveal": false,
     	"drawer": {
           "transition-duration": 500,
           "children-class": "power-child",
@@ -120,9 +143,9 @@
     	"modules": [
           "custom/power", // First element is the "group leader" and won't ever be hidden
           "custom/lock",
-	  "custom/reboot",
-	  "custom/logout"
-	]
+	      "custom/reboot",
+	      "custom/logout"
+	    ]
      },
 
     "custom/power": {
