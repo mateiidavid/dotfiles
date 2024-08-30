@@ -1,13 +1,10 @@
-require('settings').init()
-require('fn')
-require('plugins')
-require('mappings').core_bindings()
---vim.g.tokyonight_style = "night"
---cmd[[colorscheme tokyonight]] -- set color theme
---require('nightfox').load('nightfox')
---cmd([[colorscheme catppuccin]])
+--require('settings').init()
+--require('fn')
+--require('plugins')
+--require('mappings').core_bindings()
+require('settings.lazy')
 
---vim.cmd([[command! Bufs :buffers]])
+
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, { pattern = { '*.lua' }, command = ':Format' })
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   pattern = { '*.rs', '*.go', '*.c' },
@@ -32,4 +29,4 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
   end,
 })
 
-require('lspcfg').setup()
+--require('lspcfg').setup()

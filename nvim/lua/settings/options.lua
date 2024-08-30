@@ -1,5 +1,9 @@
-local global = require('settings.global')
+-- Configures global and buffer local options
 
+-- Import global state to get access to all paths
+local global = require('settings.global_state')
+
+-- === Configuration ===
 local function bind_options(options)
   for k, v in pairs(options) do
     if v == true or v == false then

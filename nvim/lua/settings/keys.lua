@@ -1,4 +1,4 @@
-local utils = require('utils')
+local utils = require('settings.utils')
 
 local M = {}
 
@@ -15,6 +15,7 @@ function M.core_bindings()
     { mode = 'n', lhs = '"+y', rhs = '<leader>y', opts = { noremap = true } },
   })
 end
+
 function M.telescope_bindings()
   utils.map_keys({
     { mode = 'n', lhs = '<C-p>', rhs = ':Telescope find_files<CR>', opts = { noremap = true } },
