@@ -81,7 +81,7 @@ return {
     { 
         "nvim-telescope/telescope.nvim", 
         opts = telescope_setup(),
-        lazy = true,
+        lazy = false,
         dependencies = {
             'nvim-lua/plenary.nvim'
         },

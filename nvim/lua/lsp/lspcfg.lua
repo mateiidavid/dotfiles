@@ -122,7 +122,7 @@ end
 local function lsp_init()
   local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
   local on_attach = function(_client, bufnr)
-    require('mappings').lsp_bindings(bufnr)
+    require('settings.keys').lsp_bindings(bufnr)
     local buf_set_option = function(...)
       vim.api.nvim_buf_set_option(bufnr, ...)
     end

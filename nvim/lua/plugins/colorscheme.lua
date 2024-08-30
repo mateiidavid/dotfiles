@@ -85,7 +85,7 @@ local rosepine = {
     priority = 1000,
     opts = rosepine_setup(),
     config = function()
-        vim.api.nvim_command('colorscheme rosepine')
+        --vim.api.nvim_command('colorscheme rosepine')
     end
 }
 
@@ -95,7 +95,7 @@ local catppuccin = {
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
       -- load the colorscheme here
-      vim.api.nvim_command('colorscheme catppuccin')
+      --vim.api.nvim_command('colorscheme catppuccin')
     end,
 }
 
@@ -128,5 +128,7 @@ local kanagawa = {
 
 return {
   -- the colorscheme should be available when starting Neovim
-  kanagawa
+  kanagawa,
+  catppuccin,
+  rosepine,
 }
