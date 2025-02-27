@@ -1,0 +1,5 @@
+
+theme = dark:Chester,light:catppuccin-latte
+font-family = "Iosevka Nerd Font Mono"
+font-size = 12.5
+# Ryuuko / Chester / ghostty +list-themes
