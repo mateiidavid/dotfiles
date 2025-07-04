@@ -1,0 +1,8 @@
+
+theme = dark:rebecca,light:catppuccin-latte
+font-family = "Iosevka Nerd Font Mono"
+font-size = 12.5
+# performable: only perform if there's input
+keybind = super+c=copy_to_clipboard
+keybind = super+v=paste_from_clipboard
+# Ryuuko / Chester / ghostty +list-themes
