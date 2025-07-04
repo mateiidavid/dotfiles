@@ -20,7 +20,6 @@
     # Dev
     neovim
     rustup
-    zellij
     gcc
 
     # archives
@@ -35,7 +34,7 @@
     fzf # CLI fuzzy finder
 
     # unfree
-    _1password
+    _1password-cli
     _1password-gui
     spotify
 
@@ -71,12 +70,32 @@
     nix-output-monitor
 
     # spotify
+    # Serial
+    screen
+    minicom
+
+    # D-Bus stuff
+    d-spy
+
+    man-pages
+    man-pages-posix
+    linux-manual
+
+    # Nix
+    nixd
   ];
 
   programs.git = {
     enable = true;
     userName = "comradeshr00m";
     userEmail = "typedfrog@proton.me";
+    aliases = {
+      st = "status";
+      co = "checkout";
+    };
+
+    delta.enable = true;
+    extraConfig = { init.defaultBranch = "main"; };
   };
 
   programs.helix = {
@@ -92,25 +111,27 @@
         };
         inline-diagnostics = {
           # 'disable'
-          cursor-line = "error";
+          cursor-line = "hint";
           other-lines = "disable";
         };
-        file-picker.hidden = false;
+        # handle externally changed files
+        file-picker.hidden = true;
         soft-wrap.enable = true;
         auto-pairs = true;
         bufferline = "always";
-        lsp = {
-          display-messages = true;
-        };
+        lsp = { display-messages = true; };
         statusline = {
           left = [ "mode" "spacer" "spacer" "file-name" ];
-          center = ["spinner" "spacer" "version-control" "diagnostics" ];
+          center = [ "spinner" "spacer" "version-control" "diagnostics" ];
           right = [
             "read-only-indicator"
             "file-type"
             "position-percentage"
             "position"
           ];
+          mode.normal = "NORMAL";
+          mode.insert = "INSERT";
+          mode.select = "SELECT";
         };
 
         color-modes = true;
@@ -122,6 +143,7 @@
         "^" = "goto_line_start";
         "C-p" = "file_picker";
         "C-c" = "no_op";
+        "g".q = ":reflow";
       };
 
       keys.insert = {
@@ -144,6 +166,15 @@
         auto-format = true;
         formatter.command = "rustfmt";
       }
+
+      {
+        name = "c";
+        auto-format = true;
+        formatter = {
+          command = "clang-format";
+          args = [ "--style=file" ];
+        };
+      }
     ];
   };
 
@@ -155,10 +186,14 @@
   home.sessionPath = [ "$HOME/.local/bin" "$HOME/.cargo/bin" ];
 
   home.shellAliases = {
+    g = "git";
     gst = "git status";
     ls = "eza --icons";
     la = "eza -la --icons --colour-scale";
     ll = "eza -abghHli --icons";
+    nswitch =
+      "nixos-rebuild switch --flake $HOME/workspace/dotfiles/nixos --use-remote-sudo && exec $SHELL -l";
+    nflake = "nix flake";
   };
 
   programs.starship = {
@@ -225,10 +260,19 @@
     # initExtra = builtins.readFile .zshrc
   };
 
+  programs.zellij = {
+    enable = true;
+    #enableZshIntegration = true;
+    settings = {
+      theme = "catppuccin-mocha";
+      mouse_mode = true;
+    };
+  };
+
   programs.direnv = {
-      enable = true;
-      enableZshIntegration = true;
-      nix-direnv.enable = true;
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true;
   };
 
   # This value determines the Home Manager release that your
