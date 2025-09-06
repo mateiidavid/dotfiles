@@ -1,10 +1,6 @@
 # configuration.nix(5) man page
 # Host specific configurartion
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
     ./nixos.nix
@@ -56,6 +52,7 @@
     powerline-fonts
     jetbrains-mono
     nerd-fonts.iosevka
+    nerd-fonts.iosevka-term
   ];
 
   # Set your time zone.

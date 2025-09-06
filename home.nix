@@ -129,11 +129,17 @@
   home.shellAliases = {
     g = "git";
     gst = "git status";
-    ls = "eza --icons";
     la = "eza -la --icons --colour-scale";
     ll = "eza -abghHli --icons";
+    ls = "eza --icons";
+    tree = "eza --tree";
+    nb = "nix build";
+    nd = "nix develop";
+    nf = "nix flake";
+    nflake = "command nix flake";
+    ns = "nix shell";
+    # TODO(@mdavid): should receive the path from args
     nswitch = "nixos-rebuild switch --flake $HOME/workspace/dotfiles --use-remote-sudo && exec $SHELL -l";
-    nflake = "nix flake";
     pbcopy = "wl-copy";
     pbpaste = "wl-paste";
   };
@@ -195,11 +201,37 @@
     enable = true;
   };
 
+  xdg.configFile."ghostty".source = config.lib.file.mkOutOfStoreSymlink ./ghostty;
+
   # https://search.nixos.org/options
   programs.zsh = {
     enable = true;
     enableCompletion = true;
-    initExtra = '''';
+    initContent = ''
+       # helper function that returns 0 if `nom` should be used for
+       # command output.
+       # supported: `nix build|develop|shell|run` and `nix flake check|build`
+       _use_nom() {
+           case "$1" in
+               build|develop|shell|run) return 0 ;;
+               flake)
+                   case "$2" in
+                       check|build) return 0 ;;
+                       *) return 1 ;;
+                   esac
+                   ;;
+               *) return 1 ;;
+           esac
+       }
+       # pipe output through `nom` if available on $PATH
+       nix() {
+           if command -v nom >/dev/null 2>&1 && _use_nom "$@"; then
+               command nix "$@" |& nom
+           else
+               command nix "$@"
+           fi
+      }
+    '';
     # initExtra = builtins.readFile .zshrc
   };
 
@@ -227,12 +259,6 @@
   # the Home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = "24.11";
-
-  # enable xdg dirs
-  xdg.configFile.ghostty = {
-    source = ./ghostty;
-    recursive = true;
-  };
 
   xdg = {
     enable = true;

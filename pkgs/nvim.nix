@@ -1,13 +1,15 @@
-{ config, pkgs, ... }:
-let
-  nvimPath = "${config.home.homeDirectory}/workspace/dotfiles/nvim";
-in
 {
+  config,
+  pkgs,
+  ...
+}: let
+  nvimPath = "${config.home.homeDirectory}/workspace/dotfiles/nvim";
+in {
   programs.neovim = {
     enable = true;
 
     plugins = with pkgs.vimPlugins; [
-       (nvim-treesitter.withPlugins (p: [
+      (nvim-treesitter.withPlugins (p: [
         p.bash
         p.c
         p.json
@@ -18,9 +20,9 @@ in
         p.python
         p.rust
         p.yaml
-       ]))
+      ]))
 
-       nvim-lspconfig
+      nvim-lspconfig
     ];
   };
 

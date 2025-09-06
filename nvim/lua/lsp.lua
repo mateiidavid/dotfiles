@@ -103,7 +103,7 @@ lspconfig.nixd.setup({
                 expr = 'import <nixpkgs> { }',
             },
             formatting = {
-                command = { 'alejandra' }, -- or 'nixpkgs-fmt'
+                command = { 'alejandra', '-q' }, -- or 'nixpkgs-fmt'
             },
         },
     },

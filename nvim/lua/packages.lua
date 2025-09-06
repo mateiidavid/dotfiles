@@ -69,7 +69,7 @@ require('nvim-treesitter.configs').setup({
     ignore_install = {},
     modules = {},
     highlight = { enable = true },
-    indent = { enable = true },
+    indent = { enable = true, disable = { 'nix' } },
 })
 
 require('lualine').setup({

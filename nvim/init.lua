@@ -39,8 +39,8 @@ vim.opt.undodir = vim.fn.stdpath('state') .. '/undo'
 vim.opt.backup = true
 vim.opt.backupdir = vim.fn.stdpath('state') .. '/backup'
 
--- Keep swap files (helps with crash recovery)
-vim.opt.swapfile = true
+-- -- Keep swap files (helps with crash recovery)
+-- vim.opt.swapfile = true
 
 -- Basic editor settings
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
