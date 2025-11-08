@@ -1,6 +1,5 @@
 -- LSP Configuration
 local lspconfig = require('lspconfig')
-
 -- Diagnostic configuration with nice visuals
 vim.diagnostic.config({
     virtual_text = false, -- Disable inline text
@@ -11,6 +10,7 @@ vim.diagnostic.config({
     float = {
         border = 'rounded', -- Rounded corners for float windows
         source = true, -- Show source (e.g., "eslint", "rust-analyzer")
+        focusable = false,
         header = '',
         prefix = '',
         format = function(diagnostic)
@@ -19,13 +19,37 @@ vim.diagnostic.config({
     },
 })
 
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+  vim.lsp.handlers.hover, {
+    border = "rounded",
+    focusable = false,
+  }
+)
+
 -- Show diagnostic float when you pause on a line with issues
 vim.api.nvim_create_autocmd('CursorHold', {
     callback = function()
+        -- local line_diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line('.') - 1 })
+        -- if #line_diagnostics > 0 then
+        --     vim.diagnostic.open_float(nil, { focus = false, close_events = { 'CursorMoved', 'InsertEnter' } })
+        -- end
+
         local line_diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line('.') - 1 })
-        if #line_diagnostics > 0 then
+        local has_float = false
+        for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
+            if vim.api.nvim_win_is_valid(winid) then
+                local config = vim.api.nvim_win_get_config(winid)
+                if config.relative ~= "" then
+                    has_float = true
+                    break
+                end
+            end
+        end
+
+        if not has_float and #line_diagnostics > 0 then
             vim.diagnostic.open_float(nil, { focus = false, close_events = { 'CursorMoved', 'InsertEnter' } })
         end
+
     end,
 })
 
@@ -71,13 +95,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
             end)
         end, opts)
         -- Smart K: show diagnostic if on error line, otherwise LSP hover
-        vim.keymap.set('n', 'K', function()
+        vim.keymap.set('n', '<leader>e', function()
             local line_diagnostics = vim.diagnostic.get(0, { lnum = vim.fn.line('.') - 1 })
             if #line_diagnostics > 0 then
-                vim.diagnostic.open_float()
-            else
-                vim.lsp.buf.hover()
+                vim.diagnostic.open_float(nil, { focus = false, close_events = { 'CursorMoved', 'InsertEnter' } })
             end
+        end, opts)
+        vim.keymap.set('n', 'K', function()
+                vim.lsp.buf.hover()
         end, opts)
     end,
 })

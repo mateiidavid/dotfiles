@@ -52,6 +52,7 @@
     # unfree
     _1password-cli
     _1password-gui
+    discord
     spotify
 
     # network tools
@@ -239,7 +240,8 @@
     enable = true;
     #enableZshIntegration = true;
     settings = {
-      theme = "catppuccin-mocha";
+      # theme = "catppuccin-mocha";
+      theme = "tokyo-night-storm";
       mouse_mode = true;
     };
   };

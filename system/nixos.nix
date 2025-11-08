@@ -1,9 +1,7 @@
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
-{ lib, ... }: {
-
+{lib, ...}: {
   # Use the systemd-boot EFI boot loader.
   #boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -17,11 +15,12 @@
   # Enable unfree 1Password packages
   nixpkgs.config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) [
-      "1password-gui"
       "1password"
-      "spotify"
       "1password-cli"
+      "1password-gui"
       "claude-code"
+      "discord"
+      "spotify"
     ];
 
   # Perform GC weekly
@@ -36,12 +35,11 @@
   # Refer to:
   # https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf-auto-optimise-store
   nix.settings.auto-optimise-store = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   # console = {
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
   #   useXkbConfig = true; # use xkb.options in tty.
   # };
-  nix.settings.trusted-users = [ "root" "@wheel" ];
-
+  nix.settings.trusted-users = ["root" "@wheel"];
 }
