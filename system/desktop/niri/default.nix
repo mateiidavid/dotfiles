@@ -1,10 +1,11 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   cfg = config.desktop;
-  enabled = cfg.enabled == "niri" || cfg.enabled == "multi";
+  enabled = cfg.enable == "niri" || cfg.enable == "multi";
   inherit (lib) mkOption mkIf types;
 in {
   options.desktop.enable = mkOption {
@@ -12,7 +13,10 @@ in {
   };
 
   config = mkIf enabled {
-    programs.niri.enable = true;
+    programs.niri = {
+      enable = true;
+      package = pkgs.niri-stable;
+    };
 
     # For now, re-use GNOME's DM
     services.xserver.displayManager.gdm = {

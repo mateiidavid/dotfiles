@@ -21,6 +21,7 @@
     ./pkgs/helix.nix
     ./pkgs/nvim.nix
     ./pkgs/baan.nix
+    ./pkgs/desktop
   ];
 
   # TODO: separate, "homegrown" nix file

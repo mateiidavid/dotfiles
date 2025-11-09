@@ -13,6 +13,7 @@ in {
         p.bash
         p.c
         p.json
+        p.kdl
         p.lua
         p.markdown
         p.nix

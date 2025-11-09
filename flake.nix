@@ -25,6 +25,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # TODO: my own overlay
+    niri.url = "github:sodiboo/niri-flake";
     # homebrewed
     baan.url = "github:mateiidavid/baan";
   };
@@ -34,6 +36,7 @@
     helix,
     home-manager,
     neovim-nightly,
+    niri,
     nixpkgs,
     ...
   }: let
@@ -55,6 +58,7 @@
               baan.overlays.default
               helix.overlays.default
               neovim-nightly.overlays.default
+              niri.overlays.niri
               (import ./pkgs/claude-code.nix {})
             ];
           }
