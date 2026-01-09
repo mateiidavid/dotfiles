@@ -49,6 +49,9 @@
     jq # lol always need this
     eza # modern ls
     fzf # CLI fuzzy finder
+    
+    # must be done
+    python3
 
     # unfree
     _1password-cli
@@ -210,6 +213,10 @@
     enable = true;
     enableCompletion = true;
     initContent = ''
+       bindkey '^R' history-incremental-search-backward
+       bindkey '^[[1;5C' forward-word
+       bindkey '^[[1;5D' backward-word
+
        # helper function that returns 0 if `nom` should be used for
        # command output.
        # supported: `nix build|develop|shell|run` and `nix flake check|build`
