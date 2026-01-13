@@ -85,13 +85,18 @@
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      devShells.${system}.default = import ./shell.nix {inherit pkgs;};
+      devShells.${system}.default = import ./devshell.nix {inherit pkgs;};
     };
   in
     {
       inherit nixosConfigurations;
-      homeManagerModules.nvim = import ./pkgs/nvim.nix;
-    } // devShells;
+      homeManagerModules = {
+        nvim = import ./pkgs/nvim.nix;
+        shell = import ./modules/shell.nix;
+        shellUtils = import ./modules/shell-utils.nix;
+      };
+    }
+    // devShells;
 }
 # when to use overlays vs override vs different inputs (specialArgs)
 # apparently:
