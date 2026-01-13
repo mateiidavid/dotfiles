@@ -8,6 +8,7 @@ pkgs.mkShell {
     man-pages-posix
     stylua
     tree
+    nixpkgs-fmt
   ];
 
   shellHook = ''

@@ -120,7 +120,8 @@ local override_language_server_configs = {
                     expr = 'import <nixpkgs> { }',
                 },
                 formatting = {
-                    command = { 'alejandra', '-q' }, -- or 'nixpkgs-fmt'
+                    -- command = { 'alejandra', '-q' }, -- or 'nixpkgs-fmt'
+                    command = { 'nixpkgs-fmt' },
                 },
             },
         },

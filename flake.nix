@@ -31,63 +31,66 @@
     baan.url = "github:mateiidavid/baan";
   };
 
-  outputs = {
-    baan,
-    helix,
-    home-manager,
-    neovim-nightly,
-    niri,
-    nixpkgs,
-    ...
-  }: let
-    nixosConfigurations = {
-      rewot-smibmuhb = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        # Another way to import helix
-        # specialArgs = [ inputs ];
-        # and then in home-manager we can consume it with inputs.helix.packages.${pkgs.system}.helix
+  outputs =
+    { baan
+    , helix
+    , home-manager
+    , neovim-nightly
+    , niri
+    , nixpkgs
+    , ...
+    }:
+    let
+      nixosConfigurations = {
+        rewot-smibmuhb = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          # Another way to import helix
+          # specialArgs = [ inputs ];
+          # and then in home-manager we can consume it with inputs.helix.packages.${pkgs.system}.helix
 
-        modules = [
-          # Import previous configuration.nix file
-          ./system
-          (import ./pkgs/firefox.nix {user = "matei";})
+          modules = [
+            # Import previous configuration.nix file
+            ./system
+            (import ./pkgs/firefox.nix { user = "matei"; })
 
-          # Overlay
-          {
-            nixpkgs.overlays = [
-              baan.overlays.default
-              helix.overlays.default
-              neovim-nightly.overlays.default
-              niri.overlays.niri
-              (import ./pkgs/claude-code.nix {})
-            ];
-          }
+            # Overlay
+            {
+              nixpkgs.overlays = [
+                baan.overlays.default
+                helix.overlays.default
+                neovim-nightly.overlays.default
+                niri.overlays.niri
+                (import ./pkgs/claude-code.nix { })
+              ];
+            }
 
-          # make home-manager as a module of nixos
-          # so home-manager config will be deployed automatically
-          # when we do `nixos-rebuild switch`
-          home-manager.nixosModules.home-manager
-          {
-            # ??
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
+            # make home-manager as a module of nixos
+            # so home-manager config will be deployed automatically
+            # when we do `nixos-rebuild switch`
+            home-manager.nixosModules.home-manager
+            {
+              # ??
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
 
-            home-manager.users.matei = import ./home.nix;
+              home-manager.users.matei = import ./home.nix;
 
-            # We can use home-manager.extraSpecialArgs to pass in specialArgs
-            # to module
-            # home-manager.extraSpecialArgs = { inherit baan; };
-          }
-        ];
+              # We can use home-manager.extraSpecialArgs to pass in specialArgs
+              # to module
+              # home-manager.extraSpecialArgs = { inherit baan; };
+            }
+          ];
+        };
       };
-    };
-    devShells = let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-    in {
-      devShells.${system}.default = import ./devshell.nix {inherit pkgs;};
-    };
-  in
+      devShells =
+        let
+          system = "x86_64-linux";
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          devShells.${system}.default = import ./devshell.nix { inherit pkgs; };
+        };
+    in
     {
       inherit nixosConfigurations;
       homeManagerModules = {
