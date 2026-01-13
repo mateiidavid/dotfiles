@@ -1,12 +1,9 @@
 {
-  version ? "1.0.56",
-  hash ? "sha256-q/17LfP5MWeKpt8akPXwMvkZ6Qhc+9IGpM6N34JuExY=",
-}:
-let
-  mkFetchUrl =
-    pkgVersion: "https://registry.npmjs.org/@anthrophic-ai/claude-code/-/claude-code-${pkgVersion}.tgz";
-  mkOverriddenPkg =
-    pkg: fetchzip:
+  version ? "2.1.3",
+  hash ? "sha256-IF0ZQ2ddjtoQ6J9lXaqrak9Wi6pCCIqnMu2l8woHZIs=",
+}: let
+  mkFetchUrl = pkgVersion: "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${pkgVersion}.tgz";
+  mkOverriddenPkg = pkg: fetchzip:
     pkg.overrideAttrs (
       final: prev: {
         inherit version;
@@ -18,7 +15,6 @@ let
         npmDepsHash = "";
       }
     );
-in
-(final: prev: {
+in (final: prev: {
   claude-code = mkOverriddenPkg prev.claude-code prev.fetchzip;
 })
