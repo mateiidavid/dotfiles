@@ -8,7 +8,6 @@ pkgs.mkShell {
     man-pages-posix
     stylua
     tree
-    alejandra
   ];
 
   shellHook = ''

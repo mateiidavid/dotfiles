@@ -1,5 +1,3 @@
--- LSP Configuration
-local lspconfig = require('lspconfig')
 -- Diagnostic configuration with nice visuals
 vim.diagnostic.config({
     virtual_text = false, -- Disable inline text
@@ -19,13 +17,6 @@ vim.diagnostic.config({
     },
 })
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
-  vim.lsp.handlers.hover, {
-    border = "rounded",
-    focusable = false,
-  }
-)
-
 -- Show diagnostic float when you pause on a line with issues
 vim.api.nvim_create_autocmd('CursorHold', {
     callback = function()
@@ -39,7 +30,7 @@ vim.api.nvim_create_autocmd('CursorHold', {
         for _, winid in pairs(vim.api.nvim_tabpage_list_wins(0)) do
             if vim.api.nvim_win_is_valid(winid) then
                 local config = vim.api.nvim_win_get_config(winid)
-                if config.relative ~= "" then
+                if config.relative ~= '' then
                     has_float = true
                     break
                 end
@@ -49,7 +40,6 @@ vim.api.nvim_create_autocmd('CursorHold', {
         if not has_float and #line_diagnostics > 0 then
             vim.diagnostic.open_float(nil, { focus = false, close_events = { 'CursorMoved', 'InsertEnter' } })
         end
-
     end,
 })
 
@@ -102,40 +92,44 @@ vim.api.nvim_create_autocmd('LspAttach', {
             end
         end, opts)
         vim.keymap.set('n', 'K', function()
-                vim.lsp.buf.hover()
+            vim.lsp.buf.hover()
         end, opts)
     end,
 })
 -- Direct LSP server configurations
-lspconfig.lua_ls.setup({
-    settings = {
-        Lua = {
-            runtime = { version = 'LuaJIT' },
-            diagnostics = { globals = { 'vim' } },
-            workspace = {
-                library = vim.api.nvim_get_runtime_file('', true),
-                checkThirdParty = false,
-            },
-            telemetry = { enable = false },
-        },
-    },
-})
-
-lspconfig.nixd.setup({
-    settings = {
-        nixd = {
-            nixpkgs = {
-                expr = 'import <nixpkgs> { }',
-            },
-            formatting = {
-                command = { 'alejandra', '-q' }, -- or 'nixpkgs-fmt'
+local enabled_language_servers = { 'lua_ls', 'nixd', 'clangd', 'rust_analyzer', 'zls' }
+vim.lsp.enable(enabled_language_servers)
+local override_language_server_configs = {
+    lua_ls = {
+        settings = {
+            Lua = {
+                runtime = { version = 'LuaJIT' },
+                diagnostics = { globals = { 'vim' } },
+                workspace = {
+                    library = vim.api.nvim_get_runtime_file('', true),
+                    checkThirdParty = false,
+                },
+                telemetry = { enable = false },
             },
         },
     },
-})
-lspconfig.rust_analyzer.setup({})
+    nixd = {
+        settings = {
+            nixd = {
+                nixpkgs = {
+                    expr = 'import <nixpkgs> { }',
+                },
+                formatting = {
+                    command = { 'alejandra', '-q' }, -- or 'nixpkgs-fmt'
+                },
+            },
+        },
+    },
+}
 
-lspconfig.clangd.setup({})
+for name, conf in pairs(override_language_server_configs) do
+    vim.lsp.config(name, conf)
+end
 
 -- Default limits (you can configure these)
 vim.opt.undolevels = 1000 -- Max undo steps in memory

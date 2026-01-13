@@ -88,7 +88,10 @@
       devShells.${system}.default = import ./shell.nix {inherit pkgs;};
     };
   in
-    {inherit nixosConfigurations;} // devShells;
+    {
+      inherit nixosConfigurations;
+      homeManagerModules.nvim = import ./pkgs/nvim.nix;
+    } // devShells;
 }
 # when to use overlays vs override vs different inputs (specialArgs)
 # apparently:

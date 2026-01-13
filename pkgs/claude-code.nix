@@ -1,8 +1,8 @@
 {
-  version ? "2.0.50",
-  hash ? "sha256-q/17LfP5MWeKpt8akPXwMvkZ6Qhc+9IGpM6N34JuExY=",
+  version ? "2.1.3",
+  hash ? "sha256-IF0ZQ2ddjtoQ6J9lXaqrak9Wi6pCCIqnMu2l8woHZIs=",
 }: let
-  mkFetchUrl = pkgVersion: "https://registry.npmjs.org/@anthrophic-ai/claude-code/-/claude-code-${pkgVersion}.tgz";
+  mkFetchUrl = pkgVersion: "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${pkgVersion}.tgz";
   mkOverriddenPkg = pkg: fetchzip:
     pkg.overrideAttrs (
       final: prev: {

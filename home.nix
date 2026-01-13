@@ -49,7 +49,7 @@
     jq # lol always need this
     eza # modern ls
     fzf # CLI fuzzy finder
-    
+
     # must be done
     python3
 
@@ -104,6 +104,7 @@
 
     # Nix
     nixd
+    alejandra
   ];
 
   programs.git = {
