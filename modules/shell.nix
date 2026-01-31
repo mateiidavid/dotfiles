@@ -1,14 +1,13 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, ...
 }:
 with lib; let
   cfg = config.control-tower.shell;
-in {
+in
+{
   options.control-tower.shell = {
-    enable = mkEnableOption "custom shell configuration";
+    enable = mkEnableOption "custom shell configuration (control tower)";
 
     aliases = {
       enable = mkOption {
@@ -19,9 +18,9 @@ in {
 
       extraAliases = mkOption {
         type = types.attrs;
-        default = {};
+        default = { };
         description = "Additional aliases to merge with defaults";
-        example = {myalias = "echo hello";};
+        example = { myalias = "echo hello"; };
       };
     };
 
@@ -34,9 +33,9 @@ in {
 
       extraSessionVariables = mkOption {
         type = types.attrs;
-        default = {};
+        default = { };
         description = "Additional session variables to merge with defaults";
-        example = {EDITOR = "vim";};
+        example = { EDITOR = "vim"; };
       };
     };
 
@@ -49,9 +48,9 @@ in {
 
       extraPaths = mkOption {
         type = types.listOf types.str;
-        default = [];
+        default = [ ];
         description = "Additional paths to add to session PATH";
-        example = ["$HOME/.local/scripts"];
+        example = [ "$HOME/.local/scripts" ];
       };
     };
 
@@ -62,11 +61,6 @@ in {
         description = "Enable ZSH with custom configuration";
       };
 
-      enableKeybindings = mkOption {
-        type = types.bool;
-        default = true;
-        description = "Enable custom keybindings (Ctrl+R history search, Ctrl+Arrow word navigation)";
-      };
 
       enableNixWrapper = mkOption {
         type = types.bool;
@@ -86,68 +80,65 @@ in {
     };
   };
 
-  config = mkIf cfg.enable (mkMerge [
+  config = mkIf cfg.enable {
     # Shell aliases
-    (mkIf cfg.aliases.enable {
-      home.shellAliases = mkMerge [
-        {
-          # Git shortcuts
-          g = "git";
-          gst = "git status";
+    home.shellAliases = mkIf cfg.aliases.enable (mkMerge [
+      {
+        # Git shortcuts
+        g = "git";
+        gst = "git status";
 
-          # eza (modern ls)
-          la = "eza -la --icons --colour-scale";
-          ll = "eza -abghHli --icons";
-          ls = "eza --icons";
-          tree = "eza --tree";
+        # eza (modern ls)
+        # la = "eza -la --icons=auto --colour-scale";
+        ll = "eza -abghHli --icons=auto";
+        # ls = "eza --color=auto --icons=auto";
+        tree = "eza --tree";
 
-          # Nix shortcuts
-          nb = "nix build";
-          nd = "nix develop";
-          nf = "nix flake";
-          nflake = "command nix flake";
-          ns = "nix shell";
-          nswitch = "nixos-rebuild switch --flake $HOME/workspace/dotfiles --use-remote-sudo && exec $SHELL -l";
+        # Nix shortcuts
+        nb = "nix build";
+        nd = "nix develop";
+        nf = "nix flake";
+        nflake = "command nix flake";
+        ns = "nix shell";
+        nswitch = "nixos-rebuild switch --flake $HOME/workspace/dotfiles --use-remote-sudo && exec $SHELL -l";
 
-          # Clipboard (Wayland)
-          pbcopy = "wl-copy";
-          pbpaste = "wl-paste";
-        }
-        cfg.aliases.extraAliases
-      ];
-    })
+        # Clipboard (Wayland)
+        pbcopy = "wl-copy";
+        pbpaste = "wl-paste";
+      }
+      cfg.aliases.extraAliases
+    ]);
 
     # Session variables
-    (mkIf cfg.sessionVariables.enable {
-      home.sessionVariables = mkMerge [
-        {
-          TERMINAL = "ghostty";
-          FZF_DEFAULT_COMMAND = "rg --files --hidden";
-        }
-        cfg.sessionVariables.extraSessionVariables
-      ];
-    })
+    home.sessionVariables = mkIf cfg.sessionVariables.enable (mkMerge [
+      {
+        TERMINAL = "ghostty";
+        FZF_DEFAULT_COMMAND = "rg --files --hidden";
+      }
+      cfg.sessionVariables.extraSessionVariables
+    ]);
 
     # Session paths
-    (mkIf cfg.sessionPath.enable {
-      home.sessionPath = [
+    home.sessionPath = mkIf cfg.sessionPath.enable (
+      [
         "$HOME/.local/bin"
         "$HOME/.cargo/bin"
-      ] ++ cfg.sessionPath.extraPaths;
-    })
+      ]
+      ++ cfg.sessionPath.extraPaths
+    );
 
     # ZSH configuration
-    (mkIf cfg.zsh.enable {
-      programs.zsh = {
+    programs.zsh = mkIf cfg.zsh.enable {
       enable = true;
       enableCompletion = true;
 
       initContent = mkMerge [
-        (mkIf cfg.zsh.enableKeybindings ''
+        ''
+          # Allows ctrl+r to work and allows ctrl + left/right
           bindkey '^R' history-incremental-search-backward
           bindkey '^[[1;5C' forward-word
           bindkey '^[[1;5D' backward-word
-        '')
+        ''
 
         (mkIf cfg.zsh.enableNixWrapper ''
           # helper function that returns 0 if `nom` should be used for
@@ -177,7 +168,6 @@ in {
 
         cfg.zsh.extraInitContent
       ];
-      };
-    })
-  ]);
+    };
+  };
 }

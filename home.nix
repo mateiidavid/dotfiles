@@ -9,10 +9,9 @@
 # and will be built together with the profile when running
 # `nixos-rebuild`
 # TODO: need to pass in baan differently
-{
-  config,
-  pkgs,
-  ...
+{ config
+, pkgs
+, ...
 }: {
   home.username = "matei";
   home.homeDirectory = "/home/matei";
@@ -38,7 +37,7 @@
   # TODO: separate, "homegrown" nix file
   programs.baan = {
     enable = true;
-    notesHomePath = "/home/matei/workspace/notes";
+    notesHomePath = "${config.home.homeDirectory}/workspace/notes";
   };
 
   # Packages that should be installed to user profile
@@ -58,7 +57,6 @@
     # utils
     ripgrep
     jq # lol always need this
-    eza # modern ls
     fzf # CLI fuzzy finder
 
     # must be done
@@ -131,6 +129,12 @@
     extraConfig = {
       init.defaultBranch = "main";
     };
+  };
+
+  programs.eza = {
+    enable = true;
+    colors = "auto";
+    enableZshIntegration = true;
   };
 
   programs.ghostty = {
