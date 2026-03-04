@@ -28,6 +28,7 @@ in {
       gnomeExtensions.color-picker
       gnomeExtensions.rounded-window-corners-reborn
       gnomeExtensions.pop-shell
+      gnomeExtensions.tophat
       gnome-tweaks
     ];
   };
