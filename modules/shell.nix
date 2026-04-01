@@ -114,6 +114,7 @@ in
       {
         TERMINAL = "ghostty";
         FZF_DEFAULT_COMMAND = "rg --files --hidden";
+        MANPAGER = "nvim +Man!";
       }
       cfg.sessionVariables.extraSessionVariables
     ]);
@@ -128,8 +129,8 @@ in
     );
 
     # ZSH configuration
-    programs.zsh = mkIf cfg.zsh.enable {
-      enable = true;
+    programs.zsh = {
+      enable = cfg.zsh.enable;
       enableCompletion = true;
 
       initContent = mkMerge [
@@ -140,7 +141,7 @@ in
           bindkey '^[[1;5D' backward-word
         ''
 
-        (mkIf cfg.zsh.enableNixWrapper ''
+        (mkIf cfg.zsh.enableNixWrapper /*bash */''
           # helper function that returns 0 if `nom` should be used for
           # command output.
           # supported: `nix build|develop|shell|run` and `nix flake check|build`
@@ -165,7 +166,19 @@ in
               fi
           }
         '')
-
+        # Search Nix pkgs using fzf
+        /* bash */
+        ''
+          nixpkgs-search() {
+              local query="''${1:?Usage: nixpkgs-search <query>}"
+              nix search nixpkgs "$query" --json 2>/dev/null \
+                  | jq -r 'to_entries[] | "\(.key)\t\(.value.version)\t\(.value.description)"' \
+                  | fzf --delimiter='\t' \
+                        --with-nth=1,3 \
+                        --preview 'echo "Package: {1}\nVersion: {2}\nDescription: {3}"' \
+                        --header="Nix packages matching: $query"
+          } 
+        ''
         cfg.zsh.extraInitContent
       ];
     };

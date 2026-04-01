@@ -97,9 +97,22 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end,
 })
 -- Direct LSP server configurations
-local enabled_language_servers = { 'lua_ls', 'nixd', 'clangd', 'rust_analyzer', 'zls' }
+local enabled_language_servers = { 'lua_ls', 'nixd', 'clangd', 'rust_analyzer', 'zls', 'ruff', 'terraformls', 'ts_ls' }
 vim.lsp.enable(enabled_language_servers)
 local override_language_server_configs = {
+    rust_analyzer = {
+        settings = {
+            ['rust-analyzer'] = {
+                cargo = {
+                    targetDir = 'target/rust-analyzer',
+                },
+                files = {
+                    excludeDirs = { '.direnv' },
+                    watcher = 'client',
+                },
+            },
+        },
+    },
     lua_ls = {
         settings = {
             Lua = {
@@ -123,6 +136,15 @@ local override_language_server_configs = {
                     -- command = { 'alejandra', '-q' }, -- or 'nixpkgs-fmt'
                     command = { 'nixpkgs-fmt' },
                 },
+            },
+        },
+    },
+    ruff = {
+        -- Ruff LSP for Python linting and formatting
+        init_options = {
+            settings = {
+                lint = { enable = true },
+                format = { enable = true },
             },
         },
     },

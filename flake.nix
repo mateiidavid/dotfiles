@@ -5,14 +5,14 @@
   inputs = {
     # NixOS official package source
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       # The `follows` keyword in inputs is used for inheritance.
       # Here, `inputs.nixpkgs` of home-manager is kept consistent with
       # the `inputs.nixpkgs` of the current flake,
       # to avoid problems caused by different versions of nixpkgs.
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
 
     # overlays
     helix = {
@@ -61,6 +61,15 @@
                 neovim-nightly.overlays.default
                 niri.overlays.niri
                 (import ./pkgs/claude-code.nix { })
+                # (final: prev: {
+                #   claude-code = prev.claude-code.overrideAttrs {
+                #     version = "2.1.83";
+                #     src = prev.fetchzip {
+                #       url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-2.1.83.tgz";
+                #       hash = "sha256-0000000000000000000000000000000000000000000=";
+                #     };
+                #   };
+                # })
               ];
             }
 

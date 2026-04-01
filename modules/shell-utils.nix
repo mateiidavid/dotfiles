@@ -1,11 +1,11 @@
-{
-  config,
-  lib,
-  ...
+{ config
+, lib
+, ...
 }:
 with lib; let
   cfg = config.control-tower.shellUtils;
-in {
+in
+{
   options.control-tower.shellUtils = {
     enable = mkEnableOption "custom shell utilities (starship, zellij, direnv)";
 
@@ -83,9 +83,60 @@ in {
     programs.zellij = mkIf cfg.zellij {
       enable = true;
       settings = {
-        theme = "tokyo-night-storm";
+        theme = "vesper";
         mouse_mode = true;
       };
+      extraConfig = ''
+        keybinds {
+            normal clear-defaults=true {
+                bind "Alt p" { SwitchToMode "Pane"; }
+                bind "Alt t" { SwitchToMode "Tab"; }
+                bind "Alt n" { SwitchToMode "Resize"; }
+                bind "Alt s" { SwitchToMode "Scroll"; }
+                bind "Alt o" { SwitchToMode "Session"; }
+                bind "Alt h" { SwitchToMode "Move"; }
+                bind "Alt g" { SwitchToMode "Locked"; }
+                bind "Alt q" { Quit; }
+                bind "Alt Left" { MoveFocusOrTab "Left"; }
+                bind "Alt Right" { MoveFocusOrTab "Right"; }
+                bind "Alt Down" { MoveFocus "Down"; }
+                bind "Alt Up" { MoveFocus "Up"; }
+                bind "Alt =" "Alt +" { Resize "Increase"; }
+                bind "Alt -" { Resize "Decrease"; }
+                bind "Alt f" { ToggleFocusFullscreen; }
+                bind "Alt z" { TogglePaneFrames; }
+                bind "Alt c" { NewPane; }
+                bind "Alt x" { CloseFocus; }
+                bind "Alt w" { ToggleFloatingPanes; }
+                bind "Alt e" { TogglePaneEmbedOrFloating; }
+            }
+            locked {
+                bind "Alt g" { SwitchToMode "Normal"; }
+            }
+            pane {
+                bind "Alt p" { SwitchToMode "Normal"; }
+                bind "d" { NewPane "Down"; SwitchToMode "Normal"; }
+            }
+            tab {
+                bind "Alt t" { SwitchToMode "Normal"; }
+            }
+            resize {
+                bind "Alt n" { SwitchToMode "Normal"; }
+            }
+            scroll {
+                bind "Alt s" { SwitchToMode "Normal"; }
+            }
+            session {
+                bind "Alt o" { SwitchToMode "Normal"; }
+            }
+            move {
+                bind "Alt h" { SwitchToMode "Normal"; }
+            }
+            search {
+                bind "Alt s" { SwitchToMode "Normal"; }
+            }
+        }
+      '';
     };
 
     # Direnv for automatic dev environments

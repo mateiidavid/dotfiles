@@ -17,7 +17,7 @@
   home.homeDirectory = "/home/matei";
   # TODO: need an overlay for baan maybe
   imports = [
-    ./pkgs/helix.nix
+    # ./pkgs/helix.nix
     ./pkgs/nvim.nix
     ./pkgs/baan.nix
     ./pkgs/desktop
@@ -121,13 +121,92 @@
     userName = "comradeshr00m";
     userEmail = "typedfrog@proton.me";
     aliases = {
-      st = "status";
+      s = "status -sb";
       co = "checkout";
+      nb = "checkout -b";
+      sw = "switch";
+
+      # Commit workflow
+      c = "commit";
+      a = "add";
+
+      # Diff
+      d = "diff";
+      ds = "diff --staged";
+      dp = "diff --no-ext-diff";
+      dps = "diff --no-ext-diff --staged";
+      dd = "difftool";
+      dds = "difftool --staged";
+
+      # Log
+      lg = "log --graph --format='%C(yellow)%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit -15";
+      lga = "log --graph --format='%C(yellow)%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset' --abbrev-commit --all";
+
+      # Blame
+      bl = "blame -w -C -C -C";
+
+      recent = "branch --sort=-committerdate --format='%(committerdate:relative)\\t%(refname:short)'";
+
+      # Misc
+      p = "pull";
+      ps = "push";
+      st = "stash";
+      stp = "stash pop";
+
+      undo = "reset --soft HEAD~1";
+      fa = "fetch --all --prune";
+      unstage = "reset HEAD --";
+
     };
 
-    delta.enable = true;
+    delta = {
+      enable = true;
+      options = {
+        side-by-side = true;
+        line-numbers = true;
+        syntax-theme = "Coldark-Dark";
+
+        minus-style = ''syntax "#3f0001"'';
+        plus-style = ''syntax "#002300"'';
+        plus-emph-style = ''syntax "#005600"'';
+        commit-decoration-style = "bold yellow box ul";
+        file-style = "bold yellow ul";
+        file-decoration-style = "none";
+        hunk-header-decoration-style = "cyan box ul";
+
+        line-numbers-left-style = "cyan";
+        line-numbers-right-style = "cyan";
+        line-numbers-minus-style = "bold 124";
+        line-numbers-plus-style = "bold 28";
+
+        hyperlinks = true;
+        navigate = true;
+      };
+    };
+
+    ignores = [
+      "result"
+      ".direnv"
+      ".worktrees"
+      ".claude"
+      "target"
+      ".DS_Store"
+      "*~"
+      "*.swp"
+      "*.swo"
+    ];
     extraConfig = {
       init.defaultBranch = "main";
+      diff.algorithm = "histogram";
+      diff.tool = "difftastic";
+      difftool.prompt = false;
+      "difftool \"difftastic\"".cmd = ''difft "$LOCAL" "$REMOTE"'';
+      merge.cnflictstyle = "zdiff3";
+      pull.rebase = true;
+      push.followTags = true;
+      rerere.enabled = true;
+      rebase.autosquash = true;
+      rebase.updateRefs = true;
     };
   };
 
