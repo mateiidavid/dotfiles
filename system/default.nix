@@ -48,6 +48,8 @@
     jetbrains-mono
     nerd-fonts.iosevka
     nerd-fonts.iosevka-term
+    font-awesome
+    rubik
   ];
 
   # Set your time zone.

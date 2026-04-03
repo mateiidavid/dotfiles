@@ -1,0 +1,213 @@
+/* ============================================
+ * Alpine Dusk — Waybar Theme
+ *
+ * Background:  #141c1f
+ * Surface:     #1e2d30
+ * Border:      #2e4548
+ * Text:        #d0dce0
+ * Accent 1:    #5aada8  (glacier teal)
+ * Accent 2:    #408a70  (alpine meadow)
+ * Warning:     #c9a84c  (sunset amber)
+ * Urgent:      #c45858  (alpine rose)
+ * Info:        #5888b0  (twilight sky)
+ * ============================================ */
+
+* {
+    font-family: "Rubik", "IosevkaTerm Nerd Font", sans-serif;
+    font-size: 13px;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: #d0dce0;
+}
+
+window#waybar > box {
+    margin: 6px 10px 0 10px;
+}
+
+/* ---- Module group pills ---- */
+
+.modules-left,
+.modules-center,
+.modules-right {
+    background: rgba(30, 45, 48, 0.88);
+    border: 1px solid rgba(46, 69, 72, 0.6);
+    border-radius: 14px;
+    padding: 2px 10px;
+    margin: 0 4px;
+}
+
+.modules-left {
+    padding: 0 3px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+/* ---- Left: Workspaces ---- */
+
+#workspaces {
+    padding: 0;
+    margin: 0;
+}
+
+#workspaces button {
+    color: #2e4548;
+    padding: 0 4px;
+    margin: 0 1px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    min-width: 12px;
+    min-height: 0;
+    font-size: 9px;
+}
+
+#workspaces button.active {
+    color: #5aada8;
+    background: rgba(90, 173, 168, 0.12);
+}
+
+#workspaces button.focused {
+    color: #5aada8;
+    background: rgba(90, 173, 168, 0.12);
+}
+
+#workspaces button:hover {
+    background: rgba(90, 173, 168, 0.18);
+    color: #d0dce0;
+}
+
+/* ---- Center: Media + Clock ---- */
+
+#mpris,
+#clock {
+    padding: 0 12px;
+    margin: 0;
+}
+
+#mpris {
+    color: #5aada8;
+}
+
+#mpris.paused {
+    color: #2e4548;
+}
+
+#clock {
+    color: #d0dce0;
+    font-weight: bold;
+}
+
+/* ---- Right: System modules ---- */
+
+#custom-weather,
+#cpu,
+#memory,
+#temperature,
+#network,
+#bluetooth,
+#pulseaudio,
+#backlight,
+#custom-battery,
+#custom-power {
+    padding: 0 10px;
+    margin: 0;
+    font-family: "Rubik", "IosevkaTerm Nerd Font", sans-serif;
+}
+
+#custom-weather {
+    color: #c9a84c;
+}
+
+#cpu {
+    color: #5888b0;
+}
+
+#memory {
+    color: #5aada8;
+}
+
+#temperature {
+    color: #408a70;
+}
+
+#temperature.critical {
+    color: #c45858;
+}
+
+#network {
+    color: #5888b0;
+}
+
+#network.disconnected {
+    color: #2e4548;
+}
+
+#bluetooth {
+    color: #5888b0;
+}
+
+#bluetooth.disabled,
+#bluetooth.off {
+    color: #2e4548;
+}
+
+#bluetooth.connected {
+    color: #5aada8;
+}
+
+#pulseaudio {
+    color: #408a70;
+}
+
+#pulseaudio.muted {
+    color: #2e4548;
+}
+
+#backlight {
+    color: #c9a84c;
+}
+
+#custom-battery {
+    color: #408a70;
+}
+
+#custom-battery.warning {
+    color: #c9a84c;
+}
+
+#custom-battery.critical {
+    color: #c45858;
+}
+
+/* ---- Power button ---- */
+
+#custom-power {
+    color: #c45858;
+    padding: 0 10px 0 8px;
+    margin-right: 2px;
+    font-size: 15px;
+}
+
+#custom-power:hover {
+    background: rgba(196, 88, 88, 0.20);
+    border-radius: 10px;
+}
+
+/* ---- Tooltip ---- */
+
+tooltip {
+    background: #1e2d30;
+    border: 1px solid #2e4548;
+    border-radius: 10px;
+    color: #d0dce0;
+}
+
+tooltip label {
+    color: #d0dce0;
+    padding: 6px 10px;
+}
