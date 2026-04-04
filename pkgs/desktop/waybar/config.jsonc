@@ -18,11 +18,9 @@
     "custom/weather",
     "cpu",
     "memory",
-    "temperature",
     "network",
     "bluetooth",
     "pulseaudio",
-    "backlight",
     "custom/battery",
     "custom/power"
   ],
@@ -67,17 +65,11 @@
     "tooltip-format": "{used:0.1f}G / {total:0.1f}G ({percentage}%)"
   },
 
-  "temperature": {
-    "format": "{icon} {temperatureC}°",
-    "format-icons": ["󰔏", "󰔏", "󰔏", "󰔐", "󰔐"],
-    "critical-threshold": 80,
-    "tooltip": true
-  },
-
   "network": {
-    "format-wifi": "󰤨  {signalStrength}%",
-    "format-ethernet": "󰈀 {cidr}",
-    "format-disconnected": "󰤭 off",
+    "format-wifi": "{icon}",
+    "format-icons": ["󰤯", "󰤢", "󰤥", "󰤨"],
+    "format-ethernet": "󰈀",
+    "format-disconnected": "󰤭",
     "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}/{cidr}",
     "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}",
     "on-click": "nm-connection-editor"
@@ -104,12 +96,6 @@
     "on-click": "pamixer -t",
     "on-click-right": "pavucontrol",
     "tooltip-format": "{desc}: {volume}%"
-  },
-
-  "backlight": {
-    "format": "☀ {percent}%",
-    "scroll-step": 5,
-    "tooltip": true
   },
 
   "custom/battery": {

@@ -1,20 +1,20 @@
 /* ============================================
- * Alpine Dusk — Waybar Theme
+ * Everforest — Waybar Theme
  *
- * Background:  #141c1f
- * Surface:     #1e2d30
- * Border:      #2e4548
- * Text:        #d0dce0
- * Accent 1:    #5aada8  (glacier teal)
- * Accent 2:    #408a70  (alpine meadow)
- * Warning:     #c9a84c  (sunset amber)
- * Urgent:      #c45858  (alpine rose)
- * Info:        #5888b0  (twilight sky)
+ * Background:  #232a2e
+ * Surface:     #2d353b
+ * Border:      #475258
+ * Text:        #d3c6aa
+ * Accent 1:    #a7c080  (sage green)
+ * Accent 2:    #83c092  (spring aqua)
+ * Warning:     #dbbc7f  (honey)
+ * Urgent:      #e67e80  (soft coral)
+ * Info:        #7fbbb3  (pond blue)
  * ============================================ */
 
 * {
     font-family: "Rubik", "IosevkaTerm Nerd Font", sans-serif;
-    font-size: 13px;
+    font-size: 14px;
     min-height: 0;
     border: none;
     border-radius: 0;
@@ -22,7 +22,7 @@
 
 window#waybar {
     background: transparent;
-    color: #d0dce0;
+    color: #d3c6aa;
 }
 
 window#waybar > box {
@@ -34,8 +34,8 @@ window#waybar > box {
 .modules-left,
 .modules-center,
 .modules-right {
-    background: rgba(30, 45, 48, 0.88);
-    border: 1px solid rgba(46, 69, 72, 0.6);
+    background: rgba(45, 53, 59, 0.85);
+    border: 1px solid rgba(71, 82, 88, 0.5);
     border-radius: 14px;
     padding: 2px 10px;
     margin: 0 4px;
@@ -55,7 +55,7 @@ window#waybar > box {
 }
 
 #workspaces button {
-    color: #2e4548;
+    color: #475258;
     padding: 0 4px;
     margin: 0 1px;
     background: transparent;
@@ -67,18 +67,18 @@ window#waybar > box {
 }
 
 #workspaces button.active {
-    color: #5aada8;
-    background: rgba(90, 173, 168, 0.12);
+    color: #a7c080;
+    background: rgba(167, 192, 128, 0.12);
 }
 
 #workspaces button.focused {
-    color: #5aada8;
-    background: rgba(90, 173, 168, 0.12);
+    color: #a7c080;
+    background: rgba(167, 192, 128, 0.12);
 }
 
 #workspaces button:hover {
-    background: rgba(90, 173, 168, 0.18);
-    color: #d0dce0;
+    background: rgba(167, 192, 128, 0.18);
+    color: #d3c6aa;
 }
 
 /* ---- Center: Media + Clock ---- */
@@ -90,15 +90,15 @@ window#waybar > box {
 }
 
 #mpris {
-    color: #5aada8;
+    color: #a7c080;
 }
 
 #mpris.paused {
-    color: #2e4548;
+    color: #475258;
 }
 
 #clock {
-    color: #d0dce0;
+    color: #d3c6aa;
     font-weight: bold;
 }
 
@@ -107,11 +107,9 @@ window#waybar > box {
 #custom-weather,
 #cpu,
 #memory,
-#temperature,
 #network,
 #bluetooth,
 #pulseaudio,
-#backlight,
 #custom-battery,
 #custom-power {
     padding: 0 10px;
@@ -120,94 +118,82 @@ window#waybar > box {
 }
 
 #custom-weather {
-    color: #c9a84c;
+    color: #dbbc7f;
 }
 
 #cpu {
-    color: #5888b0;
+    color: #7fbbb3;
 }
 
 #memory {
-    color: #5aada8;
-}
-
-#temperature {
-    color: #408a70;
-}
-
-#temperature.critical {
-    color: #c45858;
+    color: #83c092;
 }
 
 #network {
-    color: #5888b0;
+    color: #7fbbb3;
 }
 
 #network.disconnected {
-    color: #2e4548;
+    color: #475258;
 }
 
 #bluetooth {
-    color: #5888b0;
+    color: #7fbbb3;
 }
 
 #bluetooth.disabled,
 #bluetooth.off {
-    color: #2e4548;
+    color: #475258;
 }
 
 #bluetooth.connected {
-    color: #5aada8;
+    color: #83c092;
 }
 
 #pulseaudio {
-    color: #408a70;
+    color: #a7c080;
 }
 
 #pulseaudio.muted {
-    color: #2e4548;
-}
-
-#backlight {
-    color: #c9a84c;
+    color: #475258;
 }
 
 #custom-battery {
-    color: #408a70;
+    color: #a7c080;
 }
 
 #custom-battery.warning {
-    color: #c9a84c;
+    color: #dbbc7f;
 }
 
 #custom-battery.critical {
-    color: #c45858;
+    color: #e67e80;
 }
 
 /* ---- Power button ---- */
 
 #custom-power {
-    color: #c45858;
+    color: #e67e80;
     padding: 0 10px 0 8px;
     margin-right: 2px;
     font-size: 15px;
 }
 
 #custom-power:hover {
-    background: rgba(196, 88, 88, 0.20);
+    background: rgba(230, 126, 128, 0.20);
     border-radius: 10px;
 }
 
 /* ---- Tooltip ---- */
 
 tooltip {
-    background: #1e2d30;
-    border: 1px solid #2e4548;
+    background: #2d353b;
+    border: 1px solid #475258;
     border-radius: 10px;
-    color: #d0dce0;
+    color: #d3c6aa;
 }
 
 tooltip label {
-    color: #d0dce0;
+    color: #d3c6aa;
     padding: 6px 10px;
 }

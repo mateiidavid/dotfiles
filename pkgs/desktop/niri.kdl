@@ -156,15 +156,15 @@ layout {
     // You can change how the focus ring looks.
     focus-ring {
         width 3
-        active-gradient from="#5aada8" to="#408a70" angle=135
-        inactive-color "#2e4548"
+        active-gradient from="#a7c080" to="#83c092" angle=135
+        inactive-color "#475258"
     }
 
     // You can also add a border. It's similar to the focus ring, but always visible.
     border {
         width 2
-        active-gradient from="#5aada8" to="#408a70" angle=135
-        inactive-color "#2e4548"
+        active-gradient from="#a7c080" to="#83c092" angle=135
+        inactive-color "#475258"
     }
 
     // You can enable drop shadows for windows.
@@ -173,7 +173,7 @@ layout {
         softness 40
         spread 5
         offset x=0 y=6
-        color "#0a1518cc"
+        color "#1a2226cc"
     }
 
     // Struts shrink the area occupied by windows, similarly to layer-shell panels.
@@ -197,7 +197,7 @@ layout {
 spawn-at-startup "waybar"
 spawn-at-startup "swaybg" "-i" "/home/matei/.local/share/wallpapers/wallpaper.jpg" "-m" "fill"
 spawn-at-startup "mako"
-spawn-at-startup "swayidle" "-w" "timeout" "180" "brightnessctl -s set 10%" "resume" "brightnessctl -r" "timeout" "300" "hyprlock" "timeout" "600" "niri msg action power-off-monitors" "before-sleep" "hyprlock"
+spawn-at-startup "swayidle" "-w" "timeout" "180" "brightnessctl -s set 10%" "resume" "brightnessctl -r" "timeout" "300" "hyprlock" "timeout" "600" "niri msg action power-off-monitors" "before-sleep" "hyprlock" "lock" "hyprlock"
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -265,7 +265,7 @@ window-rule {
 
 // Rounded corners for all windows
 window-rule {
-    geometry-corner-radius 12
+    geometry-corner-radius 8
     clip-to-geometry true
 }
 
@@ -287,7 +287,8 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T hotkey-overlay-title="Open a Terminal: ghostty" { spawn "ghostty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Super+L hotkey-overlay-title="Lock the Screen" { spawn "hyprlock"; }
+    Mod+Shift+L hotkey-overlay-title="Lock the Screen" { spawn "hyprlock"; }
+    XF86PowerOff allow-when-locked=true { spawn "hyprlock"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.
@@ -359,7 +360,6 @@ binds {
     Mod+Shift+H     { focus-monitor-left; }
     Mod+Shift+J     { focus-monitor-down; }
     Mod+Shift+K     { focus-monitor-up; }
-    Mod+Shift+L     { focus-monitor-right; }
 
     Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
     Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }

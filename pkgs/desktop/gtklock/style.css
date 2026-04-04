@@ -1,14 +1,14 @@
 /* ============================================
- * Alpine Dusk — gtklock Theme
+ * Everforest — gtklock Theme
  *
- * Background:  #141c1f
- * Surface:     #1e2d30
- * Border:      #2e4548
- * Text:        #d0dce0
- * Accent 1:    #5aada8  (glacier teal)
- * Accent 2:    #408a70  (alpine meadow)
- * Warning:     #c9a84c  (sunset amber)
- * Urgent:      #c45858  (alpine rose)
+ * Background:  #232a2e
+ * Surface:     #2d353b
+ * Border:      #475258
+ * Text:        #d3c6aa
+ * Accent 1:    #a7c080  (sage green)
+ * Accent 2:    #83c092  (spring aqua)
+ * Warning:     #dbbc7f  (honey)
+ * Urgent:      #e67e80  (soft coral)
  * ============================================ */
 
 window {
@@ -26,7 +26,7 @@ window {
     font-size: 96px;
     font-weight: 300;
     letter-spacing: -4px;
-    color: #d0dce0;
+    color: #d3c6aa;
     text-shadow: 0 2px 30px rgba(0, 0, 0, 0.6);
     margin-bottom: 2px;
 }
@@ -37,7 +37,7 @@ window {
     font-size: 14px;
     font-weight: 400;
     letter-spacing: 3px;
-    color: #5aada8;
+    color: #a7c080;
     text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
     margin-bottom: 36px;
 }
@@ -49,7 +49,7 @@ window {
     min-height: 120px;
     box-shadow:
         0 4px 30px rgba(0, 0, 0, 0.5),
-        0 0 0 3px rgba(90, 173, 168, 0.3);
+        0 0 0 3px rgba(167, 192, 128, 0.3);
     margin-bottom: 8px;
 }
 
@@ -59,7 +59,7 @@ window {
     font-size: 13px;
     font-weight: 400;
     letter-spacing: 1.5px;
-    color: rgba(208, 220, 224, 0.35);
+    color: rgba(211, 198, 170, 0.35);
     margin-bottom: 24px;
 }
 
@@ -67,7 +67,7 @@ window {
 #input-label {
     font-family: "Rubik", sans-serif;
     font-size: 12px;
-    color: rgba(208, 220, 224, 0.2);
+    color: rgba(211, 198, 170, 0.2);
     letter-spacing: 1px;
     margin-bottom: 6px;
 }
@@ -79,17 +79,17 @@ window {
     min-width: 300px;
     min-height: 46px;
     border-radius: 12px;
-    border: 1px solid #2e4548;
-    background: rgba(20, 28, 31, 0.55);
-    color: #d0dce0;
+    border: 1px solid #475258;
+    background: rgba(35, 42, 46, 0.55);
+    color: #d3c6aa;
     padding: 0 16px;
     letter-spacing: 6px;
-    caret-color: #5aada8;
+    caret-color: #a7c080;
 }
 
 #input-field:focus {
-    border-color: #5aada8;
-    box-shadow: 0 0 20px rgba(90, 173, 168, 0.12);
+    border-color: #a7c080;
+    box-shadow: 0 0 20px rgba(167, 192, 128, 0.12);
 }
 
 /* ---- Unlock button (hidden — Enter key to unlock) ---- */
@@ -105,7 +105,7 @@ window {
 #error-label {
     font-family: "Rubik", sans-serif;
     font-size: 13px;
-    color: #c45858;
+    color: #e67e80;
     margin-top: 10px;
 }
 
@@ -113,11 +113,11 @@ window {
 #status-label {
     font-family: "Rubik", sans-serif;
     font-size: 11px;
-    color: rgba(208, 220, 224, 0.3);
+    color: rgba(211, 198, 170, 0.3);
     letter-spacing: 1px;
-    background: rgba(20, 28, 31, 0.35);
+    background: rgba(35, 42, 46, 0.35);
     padding: 7px 18px;
     border-radius: 18px;
-    border: 1px solid rgba(46, 69, 72, 0.25);
+    border: 1px solid rgba(71, 82, 88, 0.25);
     margin-top: 36px;
 }

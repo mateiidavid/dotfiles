@@ -12,8 +12,8 @@ in {
 
   config = lib.mkIf enable {
     # Wallpaper & lockscreen into the Nix store
-    home.file.".local/share/wallpapers/wallpaper.jpg".source = ../../share/images/wallhaven-lmzrx2.png;
-    home.file.".local/share/wallpapers/lockscreen.jpg".source = ../../share/images/wallhaven-lmzrx2.png;
+    home.file.".local/share/wallpapers/wallpaper.jpg".source = ../../share/images/wallhaven-5gym13.jpg;
+    home.file.".local/share/wallpapers/lockscreen.jpg".source = ../../share/images/wallhaven-5gym13.jpg;
     home.file.".local/share/wallpapers/user-photo.jpg".source = ../../share/images/keroro.jpg;
 
     # Niri compositor
