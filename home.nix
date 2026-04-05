@@ -103,6 +103,7 @@
     # Serial
     screen
     minicom
+    tio
 
     # D-Bus stuff
     d-spy

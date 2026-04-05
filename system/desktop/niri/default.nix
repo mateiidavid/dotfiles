@@ -58,6 +58,12 @@ in {
 
       # Weather widget
       wttrbar
+
+      # Monitor configuration GUI
+      wdisplays
+
+      # Logitech mouse configuration
+      logiops
     ];
 
     # Bluetooth service
@@ -65,5 +71,19 @@ in {
 
     # Allow hyprlock to authenticate
     security.pam.services.hyprlock = {};
+
+    # == logiops (logid) — MX Master 3 gesture button driver ==
+    # Maps thumb gesture button swipe directions to keypresses for niri.
+    systemd.services.logid = {
+      description = "Logitech Configuration Daemon (logiops)";
+      wantedBy = ["multi-user.target"];
+      after = ["multi-user.target"];
+      serviceConfig = {
+        ExecStart = "${pkgs.logiops}/bin/logid -c /etc/logid.cfg";
+        Restart = "on-failure";
+      };
+    };
+
+    environment.etc."logid.cfg".source = ../../../pkgs/desktop/logid.cfg;
   };
 }

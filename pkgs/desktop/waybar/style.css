@@ -1,5 +1,5 @@
 /* ============================================
- * Everforest — Waybar Theme
+ * Everforest — Waybar Theme (multi-pill layout)
  *
  * Background:  #232a2e
  * Surface:     #2d353b
@@ -12,9 +12,19 @@
  * Info:        #7fbbb3  (pond blue)
  * ============================================ */
 
+@define-color bg      rgba(45, 53, 59, 0.85);
+@define-color border  rgba(71, 82, 88, 0.5);
+@define-color text    #d3c6aa;
+@define-color dim     #475258;
+@define-color green   #a7c080;
+@define-color aqua    #83c092;
+@define-color honey   #dbbc7f;
+@define-color coral   #e67e80;
+@define-color blue    #7fbbb3;
+
 * {
     font-family: "Rubik", "IosevkaTerm Nerd Font", sans-serif;
-    font-size: 14px;
+    font-size: 13px;
     min-height: 0;
     border: none;
     border-radius: 0;
@@ -22,89 +32,135 @@
 
 window#waybar {
     background: transparent;
-    color: #d3c6aa;
+    color: @text;
 }
 
 window#waybar > box {
-    margin: 6px 10px 0 10px;
+    margin: 8px 4px 0 4px;
 }
 
-/* ---- Module group pills ---- */
-
-.modules-left,
-.modules-center,
-.modules-right {
-    background: rgba(45, 53, 59, 0.85);
-    border: 1px solid rgba(71, 82, 88, 0.5);
-    border-radius: 14px;
-    padding: 2px 10px;
-    margin: 0 4px;
-}
+/* ============================================
+ * Section containers
+ * Left is transparent (individual pills),
+ * Center and Right are single pills.
+ * ============================================ */
 
 .modules-left {
-    padding: 0 3px;
-    margin-top: 6px;
-    margin-bottom: 6px;
-}
-
-/* ---- Left: Workspaces ---- */
-
-#workspaces {
+    background: transparent;
+    border: none;
     padding: 0;
     margin: 0;
 }
 
-#workspaces button {
-    color: #475258;
+.modules-center,
+.modules-right {
+    background: @bg;
+    border: 1px solid @border;
+    border-radius: 14px;
+    padding: 4px 14px;
+    margin: 0 4px;
+}
+
+/* ============================================
+ * LEFT — Search pill
+ * ============================================ */
+
+#custom-search {
+    background: @bg;
+    border: 1px solid @border;
+    border-radius: 14px;
+    padding: 0 14px;
+    margin-right: 4px;
+    font-size: 18px;
+    color: @text;
+    min-width: 20px;
+}
+
+#custom-search:hover {
+    background: rgba(45, 53, 59, 0.95);
+    color: @green;
+}
+
+/* ============================================
+ * LEFT — Workspaces pill
+ * ============================================ */
+
+#workspaces {
+    background: @bg;
+    border: 1px solid @border;
+    border-radius: 14px;
     padding: 0 4px;
-    margin: 0 1px;
+    margin: 0 4px;
+}
+
+#workspaces button {
+    color: @dim;
+    padding: 0 8px;
+    margin: 4px 2px;
     background: transparent;
     border: none;
-    border-radius: 8px;
-    min-width: 12px;
-    min-height: 0;
-    font-size: 9px;
-}
-
-#workspaces button.active {
-    color: #a7c080;
-    background: rgba(167, 192, 128, 0.12);
-}
-
-#workspaces button.focused {
-    color: #a7c080;
-    background: rgba(167, 192, 128, 0.12);
-}
-
-#workspaces button:hover {
-    background: rgba(167, 192, 128, 0.18);
-    color: #d3c6aa;
-}
-
-/* ---- Center: Media + Clock ---- */
-
-#mpris,
-#clock {
-    padding: 0 12px;
-    margin: 0;
-}
-
-#mpris {
-    color: #a7c080;
-}
-
-#mpris.paused {
-    color: #475258;
-}
-
-#clock {
-    color: #d3c6aa;
+    border-radius: 10px;
+    min-width: 32px;
+    min-height: 32px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 14px;
     font-weight: bold;
 }
 
-/* ---- Right: System modules ---- */
+#workspaces button.active {
+    color: @green;
+    background: rgba(167, 192, 128, 0.15);
+}
 
-#custom-weather,
+#workspaces button.focused {
+    color: @green;
+    background: rgba(167, 192, 128, 0.15);
+}
+
+#workspaces button:hover {
+    background: rgba(167, 192, 128, 0.22);
+    color: @text;
+}
+
+/* ============================================
+ * LEFT — Media pill (only visible when playing)
+ * ============================================ */
+
+#mpris {
+    background: @bg;
+    border: 1px solid @border;
+    border-radius: 14px;
+    padding: 0 14px;
+    margin-left: 4px;
+    color: @green;
+}
+
+#mpris.paused {
+    color: @dim;
+}
+
+/* ============================================
+ * CENTER — Weather + Clock
+ * ============================================ */
+
+#custom-weather {
+    padding: 0 10px;
+    color: @honey;
+    font-size: 14px;
+}
+
+#clock {
+    padding: 0 10px;
+    color: @text;
+    font-family: "JetBrains Mono", monospace;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+/* ============================================
+ * RIGHT — System modules
+ * ============================================ */
+
 #cpu,
 #memory,
 #network,
@@ -113,67 +169,63 @@ window#waybar > box {
 #custom-battery,
 #custom-power {
     padding: 0 10px;
-    margin: 0;
-    font-family: "Rubik", "IosevkaTerm Nerd Font", sans-serif;
-}
-
-#custom-weather {
-    color: #dbbc7f;
 }
 
 #cpu {
-    color: #7fbbb3;
+    color: @blue;
 }
 
 #memory {
-    color: #83c092;
+    color: @aqua;
 }
 
 #network {
-    color: #7fbbb3;
+    color: @blue;
 }
 
 #network.disconnected {
-    color: #475258;
+    color: @dim;
 }
 
 #bluetooth {
-    color: #7fbbb3;
+    color: @blue;
 }
 
 #bluetooth.disabled,
 #bluetooth.off {
-    color: #475258;
+    color: @dim;
 }
 
 #bluetooth.connected {
-    color: #83c092;
+    color: @aqua;
 }
 
 #pulseaudio {
-    color: #a7c080;
+    color: @green;
 }
 
 #pulseaudio.muted {
-    color: #475258;
+    color: @dim;
 }
 
 #custom-battery {
-    color: #a7c080;
+    color: @green;
 }
 
 #custom-battery.warning {
-    color: #dbbc7f;
+    color: @honey;
 }
 
 #custom-battery.critical {
-    color: #e67e80;
+    color: @coral;
 }
 
-/* ---- Power button ---- */
+/* ============================================
+ * Power button
+ * ============================================ */
 
 #custom-power {
-    color: #e67e80;
+    color: @coral;
     padding: 0 10px 0 8px;
     margin-right: 2px;
     font-size: 15px;
@@ -184,16 +236,18 @@ window#waybar > box {
     border-radius: 10px;
 }
 
-/* ---- Tooltip ---- */
+/* ============================================
+ * Tooltip
+ * ============================================ */
 
 tooltip {
     background: #2d353b;
     border: 1px solid #475258;
     border-radius: 10px;
-    color: #d3c6aa;
+    color: @text;
 }
 
 tooltip label {
-    color: #d3c6aa;
+    color: @text;
     padding: 6px 10px;
 }
