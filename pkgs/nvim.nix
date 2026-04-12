@@ -21,23 +21,13 @@ in {
       enable = true;
 
       plugins = with pkgs.vimPlugins; [
-        (nvim-treesitter.withPlugins (p: [
-          p.bash
-          p.c
-          p.json
-          p.kdl
-          p.lua
-          p.markdown
-          p.meson
-          p.nix
-          p.perl
-          p.python
-          p.rust
-          p.terraform
-          p.toml
-          p.yaml
-          p.zig
-        ]))
+        # TODO: move nvim-treesitter back to Nix once nixpkgs tracking of nightly-compatible
+        # versions is reliable. For now, managed via vim.pack in packages.lua to stay in sync
+        # with neovim nightly.
+        # (nvim-treesitter.withPlugins (p: [
+        #   p.bash p.c p.json p.kdl p.lua p.markdown p.markdown_inline
+        #   p.meson p.nix p.perl p.python p.rust p.terraform p.toml p.yaml p.zig
+        # ]))
 
         nvim-lspconfig
       ];

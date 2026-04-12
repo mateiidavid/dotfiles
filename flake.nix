@@ -29,16 +29,20 @@
     niri.url = "github:sodiboo/niri-flake";
     # homebrewed
     baan.url = "github:mateiidavid/baan";
+    # hardware for t480
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
 
   outputs =
-    { baan
-    , helix
-    , home-manager
-    , neovim-nightly
-    , niri
-    , nixpkgs
-    , ...
+    {
+      baan,
+      helix,
+      home-manager,
+      neovim-nightly,
+      niri,
+      nixpkgs,
+      nixos-hardware,
+      ...
     }:
     let
       nixosConfigurations = {
@@ -51,6 +55,7 @@
           modules = [
             # Import previous configuration.nix file
             ./system
+            nixos-hardware.nixosModules.lenovo-thinkpad-t480
             (import ./pkgs/firefox.nix { user = "matei"; })
 
             # Overlay
@@ -123,4 +128,3 @@
 # callPackage, `overlays` and `overrides` are useful for _BUILDING_ a package
 # Overlays just modify the package globally so you don't modify it just at the callsite. esp. if it's a package
 # other packages rely on
-

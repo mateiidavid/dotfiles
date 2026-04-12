@@ -19,6 +19,10 @@ local pack_to_delete = {
     { src = 'https://github.com/nvim-lualine/lualine.nvim' },
 }
 
+local pack_treesitter = {
+    { src = 'https://github.com/nvim-treesitter/nvim-treesitter' },
+}
+
 local pack_mini = {
     -- TODO:
     -- - add mini.files
@@ -31,7 +35,7 @@ local pack_mini = {
     { src = 'https://github.com/echasnovski/mini.pick' },
 }
 
-vim.pack.add(mk_final_packages(pack_colorschemes, pack_to_delete, pack_mini, {
+vim.pack.add(mk_final_packages(pack_colorschemes, pack_to_delete, pack_mini, pack_treesitter, {
     { src = 'https://github.com/folke/which-key.nvim' },
     { src = 'https://github.com/windwp/nvim-autopairs' },
 }))
@@ -61,16 +65,29 @@ require('mini.jump2d').setup({
 })
 
 -- Treesitter configuration
-require('nvim-treesitter.configs').setup({
-    -- Nix manages our parsers so disable package management
-    ensure_installed = {},
-    sync_install = false,
-    auto_install = false,
-    ignore_install = {},
-    modules = {},
-    highlight = { enable = true },
-    indent = { enable = true, disable = { 'nix' } },
-})
+-- nvim-treesitter itself is managed via vim.pack (see pack_treesitter above);
+-- parsers are installed to cache (Nix store is read-only).
+local ts_parser_dir = vim.fn.expand('~/.cache/nvim/ts_parsers')
+vim.opt.runtimepath:append(ts_parser_dir)
+
+local ts_ok, ts_configs = pcall(require, 'nvim-treesitter.configs')
+if not ts_ok then
+    vim.notify('nvim-treesitter not available yet — restart neovim once download completes', vim.log.levels.WARN)
+else
+    ts_configs.setup({
+        parser_install_dir = ts_parser_dir,
+        ensure_installed = {
+            'bash', 'c', 'json', 'kdl', 'lua', 'markdown', 'markdown_inline',
+            'meson', 'nix', 'perl', 'python', 'rust', 'terraform', 'toml', 'yaml', 'zig',
+        },
+        sync_install = false,
+        auto_install = false,
+        ignore_install = {},
+        modules = {},
+        highlight = { enable = true },
+        indent = { enable = true, disable = { 'nix' } },
+    })
+end
 
 require('lualine').setup({
     options = {

@@ -1,63 +1,67 @@
 {
   "plugins": {
     "gitsigns.nvim": {
-      "rev": "6e3c66548035e50db7bd8e360a29aec6620c3641",
+      "rev": "8d82c240f190fc33723d48c308ccc1ed8baad69d",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "lualine.nvim": {
-      "rev": "b8c23159c0161f4b89196f74ee3a6d02cdc3a955",
+      "rev": "a905eeebc4e63fdc48b5135d3bf8aea5618fb21c",
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "mini-git": {
-      "rev": "689bb78921e34d621df8dc1733337b2c3c39a786",
+      "rev": "a007cc40a4585c4f54787ddcf07295c2689daeb4",
       "src": "https://github.com/echasnovski/mini-git"
     },
     "mini.diff": {
-      "rev": "f573bd2ae2eb225ea2f125126b8869e04bcaf231",
+      "rev": "ab11575a6c147ecfba894d676d0c93e855021d34",
       "src": "https://github.com/echasnovski/mini.diff"
     },
     "mini.icons": {
-      "rev": "b8f6fa6f5a3fd0c56936252edcd691184e5aac0c",
+      "rev": "7fdae2443a0e2910015ca39ad74b50524ee682d3",
       "src": "https://github.com/echasnovski/mini.icons"
     },
     "mini.jump2d": {
-      "rev": "7a1b72251bf841bd8feb3e54e3e61c2883bc29ae",
+      "rev": "c0df3170873b712b61951781aeee9942a92ba1f1",
       "src": "https://github.com/echasnovski/mini.jump2d"
     },
     "mini.pairs": {
-      "rev": "1e1ca3f60f58d4050bf814902b472eec9963a5dd",
+      "rev": "42387c7fe68fc0b6e95eaf37f1bb76e7bffaa0d9",
       "src": "https://github.com/echasnovski/mini.pairs"
     },
     "mini.pick": {
-      "rev": "82ec629ca108c7b96b8b9bb733d235b39e137690",
+      "rev": "437d44eb57312f23e6b931704694fc294922cd88",
       "src": "https://github.com/echasnovski/mini.pick"
     },
     "mini.statusline": {
-      "rev": "f6917f4da995d64edf3728b1302dbd5d4561c912",
+      "rev": "b456bfe845e475e9cec065b7a9a1ef657ad2f41b",
       "src": "https://github.com/echasnovski/mini.statusline"
     },
     "nvim-autopairs": {
-      "rev": "23320e75953ac82e559c610bec5a90d9c6dfa743",
+      "rev": "59bce2eef357189c3305e25bc6dd2d138c1683f5",
       "src": "https://github.com/windwp/nvim-autopairs"
     },
+    "nvim-treesitter": {
+      "rev": "4916d6592ede8c07973490d9322f187e07dfefac",
+      "src": "https://github.com/nvim-treesitter/nvim-treesitter"
+    },
     "plenary.nvim": {
-      "rev": "b9fd5226c2f76c951fc8ed5923d85e4de065e509",
+      "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "sonokai": {
-      "rev": "45481a54f9e44b8b9d89509df514b86bbf22aa07",
+      "rev": "b023c5280b16fe2366f5e779d8d2756b3e5ee9c3",
       "src": "https://github.com/sainnhe/sonokai"
     },
     "telescope.nvim": {
-      "rev": "b4da76be54691e854d3e0e02c36b0245f945c2c7",
+      "rev": "f7c673b8e46e8f233ff581d3624a517d33a7e264",
       "src": "https://github.com/nvim-telescope/telescope.nvim"
     },
     "vague.nvim": {
-      "rev": "ab73d180af05eee0aaa25e9e6a8bf374c93c32c6",
+      "rev": "8751181a1aa431b4e8983b0a183afef5cbc08381",
       "src": "https://github.com/vague2k/vague.nvim"
     },
     "which-key.nvim": {
-      "rev": "370ec46f710e058c9c1646273e6b225acf47cbed",
+      "rev": "3aab2147e74890957785941f0c1ad87d0a44c15a",
       "src": "https://github.com/folke/which-key.nvim"
     }
   }

@@ -115,6 +115,8 @@
     # Nix
     nixd
     alejandra
+    nixpkgs-fmt
+    nixfmt-rfc-style
   ];
 
   programs.git = {

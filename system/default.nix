@@ -1,12 +1,26 @@
 # configuration.nix(5) man page
 # Host specific configurartion
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   imports = [
     ./hardware-configuration.nix
     ./nixos.nix
     ./services.nix
     ./desktop
   ];
+
+  # GPU: full acceleration for i915 (Intel UHD 620)
+  hardware.graphics.enable = true;
+  boot.kernelParams = [ "i915.enable_guc=2" ];
+
+  # CPU: avoid powersave stalls under Wayland compositors
+  powerManagement.cpuFreqGovernor = "performance";
+
+  # I/O: kyber scheduler for NVMe + lower swappiness
+  services.udev.extraRules = ''
+    ACTION=="add|change", KERNEL=="nvme[0-9]*", ATTR{queue/scheduler}="kyber"
+  '';
+  boot.kernel.sysctl."vm.swappiness" = 10;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -25,7 +39,7 @@
       "wheel"
       "networkmanager"
     ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [tree];
+    packages = with pkgs; [ tree ];
     shell = pkgs.zsh;
   };
 

@@ -20,6 +20,13 @@ vim.o.smartcase = true
 vim.o.cursorline = true
 vim.opt.clipboard:append('unnamedplus')
 vim.opt.winborder = 'rounded'
+-- disable middle-click paste (touchpad/mouse accidentally triggers it)
+for _, mode in ipairs({ 'n', 'i', 'v' }) do
+    vim.keymap.set(mode, '<MiddleMouse>', '<Nop>')
+    vim.keymap.set(mode, '<2-MiddleMouse>', '<Nop>')
+    vim.keymap.set(mode, '<3-MiddleMouse>', '<Nop>')
+    vim.keymap.set(mode, '<4-MiddleMouse>', '<Nop>')
+end
 -- some other time, maybe vim.o.shortmess = ''
 -- buffer local options -
 -- very important settings

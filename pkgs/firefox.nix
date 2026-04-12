@@ -64,6 +64,14 @@
       # Optional: Enable AI-powered smart tab grouping suggestions
       "browser.tabs.groups.smart.enabled" = true;
       "browser.tabs.groups.smart.userEnabled" = true;
+
+      # Disable IPv6
+      "network.dns.disableIPv6" = true;
+
+      # Hardware acceleration / WebRender
+      "gfx.webrender.all" = true;
+      "media.ffmpeg.vaapi.enabled" = true;
+      "layers.acceleration.force-enabled" = true;
     };
   gwFoxSettings = {
     settings = gwfoxPrefs;
@@ -84,6 +92,7 @@ in {
     };
     programs.firefox = {
       enable = true;
+      package = pkgs.firefox-bin;
 
       # create a profile with gwfox
       profiles.gwfox = lib.mkMerge [
