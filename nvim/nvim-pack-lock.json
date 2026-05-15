@@ -48,6 +48,10 @@
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
+    "seoul256.vim": {
+      "rev": "d9a91d8d4e153274e1ecc0ceb05c37f0d0de84d7",
+      "src": "https://github.com/junegunn/seoul256.vim"
+    },
     "sonokai": {
       "rev": "b023c5280b16fe2366f5e779d8d2756b3e5ee9c3",
       "src": "https://github.com/sainnhe/sonokai"

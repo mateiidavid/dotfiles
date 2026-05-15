@@ -28,7 +28,10 @@
     # TODO: my own overlay
     niri.url = "github:sodiboo/niri-flake";
     # homebrewed
-    baan.url = "github:mateiidavid/baan";
+    baan = {
+      url = "sourcehut:~comradeshroom/baan/0.2.2";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # hardware for t480
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
   };
@@ -66,6 +69,7 @@
                 neovim-nightly.overlays.default
                 niri.overlays.niri
                 (import ./pkgs/claude-code.nix { })
+                (import ./pkgs/zulip-term.nix)
                 # (final: prev: {
                 #   claude-code = prev.claude-code.overrideAttrs {
                 #     version = "2.1.83";

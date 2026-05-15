@@ -9,10 +9,12 @@
 # and will be built together with the profile when running
 # `nixos-rebuild`
 # TODO: need to pass in baan differently
-{ config
-, pkgs
-, ...
-}: {
+{
+  config,
+  pkgs,
+  ...
+}:
+{
   home.username = "matei";
   home.homeDirectory = "/home/matei";
   # TODO: need an overlay for baan maybe
@@ -117,6 +119,13 @@
     alejandra
     nixpkgs-fmt
     nixfmt-rfc-style
+
+    # Git
+    gh
+    glab
+
+    # Comms
+    zulip-term
   ];
 
   programs.git = {
@@ -197,6 +206,9 @@
       "*~"
       "*.swp"
       "*.swo"
+      "TODO.md"
+      "todo.md"
+      "NOTES.md"
     ];
     extraConfig = {
       init.defaultBranch = "main";
@@ -224,6 +236,11 @@
   };
 
   xdg.configFile."ghostty".source = config.lib.file.mkOutOfStoreSymlink ./ghostty;
+
+  home.file.".claude/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/workspace/dotfiles/claude/settings.json";
+  home.file.".claude/skills".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/workspace/dotfiles/claude/skills";
+  home.file.".claude/agents".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/workspace/dotfiles/claude/agents";
+  home.file.".claude/statusline-command.sh".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/workspace/dotfiles/claude/statusline-command.sh";
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -266,4 +283,3 @@
 #    "Xcursor.size" = 16;
 #    "Xft.dpi" = 172;
 #  };
-

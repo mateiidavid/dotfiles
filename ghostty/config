@@ -7,7 +7,7 @@ font-size = 10.5
 # Scrollback & Copy on Select
 # ============================================
 scrollback-limit = 100000
-copy-on-select = true
+copy-on-select = false
 clipboard-paste-protection = false
 
 # ============================================

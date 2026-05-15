@@ -66,4 +66,8 @@ require('lsp')
 require('autocmds')
 
 -- Set colorscheme to sonokai
-vim.cmd.colorscheme('sonokai')
+-- vim.cmd.colorscheme('sonokai')
+vim.g.seoul256_background = 235
+vim.g.seoul256_srgb = 1
+vim.cmd.colorscheme('seoul256')
+vim.api.nvim_set_hl(0, 'CursorLine', { bg = '#3a3a3a' })

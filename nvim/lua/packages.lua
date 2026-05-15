@@ -13,6 +13,7 @@ end
 local pack_colorschemes = {
     { src = 'https://github.com/vague2k/vague.nvim' },
     { src = 'https://github.com/sainnhe/sonokai' },
+    { src = 'https://github.com/junegunn/seoul256.vim' },
 }
 
 local pack_to_delete = {
@@ -20,7 +21,7 @@ local pack_to_delete = {
 }
 
 local pack_treesitter = {
-    { src = 'https://github.com/nvim-treesitter/nvim-treesitter' },
+    { src = 'https://github.com/nvim-treesitter/nvim-treesitter', checkout = 'main' },
 }
 
 local pack_mini = {
@@ -69,25 +70,44 @@ require('mini.jump2d').setup({
 -- parsers are installed to cache (Nix store is read-only).
 local ts_parser_dir = vim.fn.expand('~/.cache/nvim/ts_parsers')
 vim.opt.runtimepath:append(ts_parser_dir)
+require('nvim-treesitter').setup({
+    install_dir = ts_parser_dir,
+})
 
-local ts_ok, ts_configs = pcall(require, 'nvim-treesitter.configs')
-if not ts_ok then
-    vim.notify('nvim-treesitter not available yet — restart neovim once download completes', vim.log.levels.WARN)
-else
-    ts_configs.setup({
-        parser_install_dir = ts_parser_dir,
-        ensure_installed = {
-            'bash', 'c', 'json', 'kdl', 'lua', 'markdown', 'markdown_inline',
-            'meson', 'nix', 'perl', 'python', 'rust', 'terraform', 'toml', 'yaml', 'zig',
-        },
-        sync_install = false,
-        auto_install = false,
-        ignore_install = {},
-        modules = {},
-        highlight = { enable = true },
-        indent = { enable = true, disable = { 'nix' } },
-    })
-end
+require('nvim-treesitter').install({
+    'bash',
+    'c',
+    'json',
+    'kdl',
+    'lua',
+    'markdown',
+    'markdown_inline',
+    'meson',
+    'nix',
+    'perl',
+    'python',
+    'rust',
+    'terraform',
+    'toml',
+    'yaml',
+    'zig',
+}):wait(300000)
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = '*',
+    callback = function()
+        pcall(vim.treesitter.start)
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'nix',
+    callback = function()
+        pcall(vim.treesitter.start)
+        vim.bo.indentexpr = ''
+    end,
+})
 
 require('lualine').setup({
     options = {
