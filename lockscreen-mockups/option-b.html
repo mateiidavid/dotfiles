@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option B — Compact Stack (swaylock-effects)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 100vw; height: 100vh;
+    background: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rubik', sans-serif;
+    color: #d0dce0;
+    overflow: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: inherit;
+    filter: blur(14px) brightness(0.6);
+    transform: scale(1.06);
+    z-index: 0;
+  }
+
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.5) 100%);
+    z-index: 1;
+  }
+
+  .lockscreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+  }
+
+  /* ---- Frog indicator (large, prominent) ---- */
+  .indicator {
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .indicator-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 12px solid #2e4548;
+    box-shadow:
+      0 0 50px rgba(0,0,0,0.5),
+      0 0 80px rgba(90,173,168,0.08);
+  }
+
+  .indicator-ring.typing {
+    border-color: #5aada8;
+    box-shadow:
+      0 0 50px rgba(0,0,0,0.5),
+      0 0 30px rgba(90,173,168,0.15);
+  }
+
+  .indicator-inner {
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    background: rgba(20,28,31,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 68px;
+  }
+
+  /* ---- Hostname (styled terminal-like) ---- */
+  .hostname {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+
+  .hostname .prompt { color: #408a70; }
+  .hostname .user { color: #5aada8; font-weight: 400; }
+  .hostname .at { color: #2e4548; }
+  .hostname .host { color: #5888b0; }
+  .hostname .tilde { color: rgba(208,220,224,0.4); }
+
+  /* ---- Compact clock below hostname ---- */
+  .clock-line {
+    font-size: 36px;
+    font-weight: 300;
+    letter-spacing: -1px;
+    color: #d0dce0;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    margin-bottom: 4px;
+  }
+
+  .date-line {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(208,220,224,0.45);
+    margin-bottom: 6px;
+  }
+
+  .weather-line {
+    font-size: 12px;
+    color: #c9a84c;
+    margin-bottom: 28px;
+    letter-spacing: 1px;
+  }
+
+  /* ---- Thin divider ---- */
+  .divider {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, #5aada8, #408a70);
+    border-radius: 1px;
+    margin-bottom: 28px;
+  }
+
+  /* ---- Status row at bottom ---- */
+  .status-row {
+    display: flex;
+    gap: 16px;
+    font-size: 11px;
+    color: rgba(208,220,224,0.3);
+    letter-spacing: 1px;
+  }
+
+  .status-item { display: flex; align-items: center; gap: 5px; }
+  .s-dot { width: 5px; height: 5px; border-radius: 50%; }
+  .s-green { background: #408a70; }
+  .s-amber { background: #c9a84c; }
+
+  /* ---- Note ---- */
+  .note {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    background: rgba(30,45,48,0.9);
+    border: 1px solid #2e4548;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 11px;
+    color: rgba(208,220,224,0.6);
+    max-width: 300px;
+    line-height: 1.5;
+  }
+  .note strong { color: #5aada8; }
+</style>
+</head>
+<body>
+  <div class="lockscreen">
+    <div class="indicator">
+      <div class="indicator-ring typing"></div>
+      <div class="indicator-inner">&#x1F438;</div>
+    </div>
+
+    <div class="hostname">
+      <span class="prompt">&#x276F;</span>
+      <span class="user">matei</span><span class="at">@</span><span class="host">rewot-smibmuhb</span>
+      <span class="tilde">~</span>
+    </div>
+
+    <div class="clock-line">21:37</div>
+    <div class="date-line">Thursday, 02 April</div>
+    <div class="weather-line">&#x2600; 14&deg;C &middot; Partly Cloudy</div>
+
+    <div class="divider"></div>
+
+    <div class="status-row">
+      <div class="status-item">
+        <div class="s-dot s-green"></div>
+        <span>WiFi</span>
+      </div>
+      <div class="status-item">
+        <div class="s-dot s-green"></div>
+        <span>Bluetooth</span>
+      </div>
+      <div class="status-item">
+        <div class="s-dot s-amber"></div>
+        <span>72%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>How this works:</strong> Frog avatar as <strong>indicator-image</strong>, hostname via <strong>datestr</strong> line, weather + battery injected by a wrapper script at lock time. The ring animates with Alpine Dusk colors on typing/verify/wrong states.
+    <br><br>
+    <strong>Layout:</strong> Frog on top &rarr; hostname &rarr; time &rarr; date &rarr; weather &rarr; status. All centered, using swaylock-effects' native clock + indicator positioning.
+  </div>
+</body>
+</html>

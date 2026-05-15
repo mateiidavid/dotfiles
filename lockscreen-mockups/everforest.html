@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Everforest Theme — Final Preview</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0a;
+    color: #d3c6aa;
+    font-family: 'Rubik', sans-serif;
+    padding: 40px;
+  }
+
+  h1 {
+    text-align: center;
+    font-weight: 300;
+    font-size: 32px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+    color: #a7c080;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 13px;
+    color: #7a8478;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+  }
+
+  /* ---- Palette Strip ---- */
+  .palette-strip {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+  }
+
+  .swatch-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .swatch {
+    width: 64px;
+    height: 42px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: transform 0.15s;
+    cursor: pointer;
+  }
+
+  .swatch:hover { transform: scale(1.12); }
+
+  .swatch-label {
+    font-size: 9px;
+    color: #7a8478;
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .swatch-name {
+    font-size: 8px;
+    color: #555;
+    margin-top: 1px;
+  }
+
+  /* ---- Desktop Mockup ---- */
+  .section-title {
+    font-size: 11px;
+    color: #7a8478;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .desktop {
+    position: relative;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto 50px;
+    aspect-ratio: 16 / 9;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.04);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+  }
+
+  .desktop-wallpaper {
+    position: absolute;
+    inset: 0;
+    background-image: url('file:///home/matei/workspace/dotfiles/share/images/wallhaven-5gym13.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* ---- Waybar ---- */
+  .waybar {
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 10;
+  }
+
+  .waybar-group {
+    background: rgba(45, 53, 59, 0.85);
+    border: 1px solid rgba(71, 82, 88, 0.5);
+    border-radius: 14px;
+    padding: 6px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: #d3c6aa;
+  }
+
+  .waybar-left {
+    gap: 5px;
+    padding: 5px 8px;
+  }
+
+  .workspace-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    background: #475258;
+  }
+
+  .workspace-dot.active {
+    width: 20px;
+    height: 8px;
+    border-radius: 4px;
+    background: #a7c080;
+    box-shadow: 0 0 8px rgba(167, 192, 128, 0.3);
+  }
+
+  /* ---- Notification ---- */
+  .notification {
+    position: absolute;
+    top: 52px;
+    right: 20px;
+    width: 320px;
+    background: rgba(45, 53, 59, 0.92);
+    border: 2px solid #83c092;
+    border-radius: 12px;
+    padding: 14px 16px;
+    z-index: 10;
+    color: #d3c6aa;
+  }
+
+  .notif-title {
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .notif-body {
+    font-size: 12px;
+    opacity: 0.7;
+  }
+
+  /* ---- Terminal ---- */
+  .terminal {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 58%;
+    background: #232a2e;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    border: 2px solid rgba(167, 192, 128, 0.5);
+  }
+
+  .terminal-titlebar {
+    background: #2d353b;
+    padding: 8px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: #d3c6aa;
+  }
+
+  .terminal-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .terminal-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .terminal-body {
+    padding: 14px 18px 22px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: #d3c6aa;
+  }
+
+  /* ---- Fuzzel Overlay ---- */
+  .fuzzel-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+  }
+
+  .fuzzel {
+    width: 35%;
+    background: rgba(35, 42, 46, 0.95);
+    border: 2px solid #475258;
+    border-radius: 12px;
+    overflow: hidden;
+    backdrop-filter: blur(20px);
+  }
+
+  .fuzzel-input {
+    padding: 12px 16px;
+    font-size: 14px;
+    color: #d3c6aa;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(71, 82, 88, 0.4);
+  }
+
+  .fuzzel-input .prompt { color: #a7c080; }
+
+  .fuzzel-item {
+    padding: 8px 16px;
+    font-size: 13px;
+    color: #d3c6aa;
+  }
+
+  .fuzzel-item.selected {
+    background: #2d353b;
+    color: #a7c080;
+    font-weight: 500;
+  }
+
+  .fuzzel-item .match { color: #83c092; }
+
+  /* ---- Lockscreen ---- */
+  .lockscreen-wrap {
+    max-width: 700px;
+    margin: 0 auto 60px;
+  }
+
+  .lockscreen {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.04);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+
+  .lockscreen .desktop-wallpaper {
+    filter: blur(8px) brightness(0.55);
+    transform: scale(1.05);
+  }
+
+  .lock-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+  }
+
+  .lock-time {
+    font-family: 'Rubik', sans-serif;
+    font-weight: 300;
+    font-size: 56px;
+    letter-spacing: -2px;
+    color: #d3c6aa;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+  }
+
+  .lock-date {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: #a7c080;
+    margin-bottom: 20px;
+    text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  }
+
+  .lock-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #475258;
+    border: 3px solid rgba(167, 192, 128, 0.3);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+
+  .lock-user {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: rgba(211, 198, 170, 0.35);
+    letter-spacing: 1.5px;
+    margin-bottom: 16px;
+  }
+
+  .lock-input {
+    width: 200px;
+    height: 34px;
+    border-radius: 17px;
+    background: rgba(35, 42, 46, 0.5);
+    border: 1px solid #475258;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    letter-spacing: 8px;
+    color: #d3c6aa;
+  }
+
+  /* ---- Changes List ---- */
+  .changes {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 30px;
+    background: #151515;
+    border: 1px solid #222;
+    border-radius: 14px;
+  }
+
+  .changes h2 {
+    font-weight: 400;
+    font-size: 16px;
+    color: #a7c080;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+  }
+
+  .change-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+
+  .change-file {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: #83c092;
+    min-width: 240px;
+    flex-shrink: 0;
+  }
+
+  .change-desc {
+    color: #7a8478;
+  }
+
+  .tag {
+    display: inline-block;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.5px;
+    margin-right: 4px;
+  }
+
+  .tag-color { background: rgba(167, 192, 128, 0.15); color: #a7c080; }
+  .tag-config { background: rgba(127, 187, 179, 0.15); color: #7fbbb3; }
+  .tag-new { background: rgba(219, 188, 127, 0.15); color: #dbbc7f; }
+</style>
+</head>
+<body>
+
+<h1>Everforest</h1>
+<p class="subtitle">mossy, cozy, nature-inspired dark theme</p>
+
+<!-- Palette Strip -->
+<div class="palette-strip">
+  <div class="swatch-group"><div class="swatch" style="background:#232a2e"></div><div class="swatch-label">#232a2e</div><div class="swatch-name">bg</div></div>
+  <div class="swatch-group"><div class="swatch" style="background:#2d353b"></div><div class="swatch-label">#2d353b</div><div class="swatch-name">surface</div></div>
+  <div class="swatch-group"><div class="swatch" style="background:#475258"></div><div class="swatch-label">#475258</div><div class="swatch-name">border</div></div>
+  <div class="swatch-group"><div class="swatch" style="background:#7a8478"></div><div class="swatch-label">#7a8478</div><div class="swatch-name">grey</div></div>
+  <div class="swatch-group"><div class="swatch" style="background:#d3c6aa"></div><div class="swatch-label">#d3c6aa</div><div class="swatch-name">text</div></div>
+  <div class="swatch-group"><div class="swatch" style="background:#a7c080"></div><div class="swatch-label">#a7c080</div><div class="swatch-name">green</div></div>
+  <div class="swatch-group"><div class="swatch" style="background:#83c092"></div><div class="swatch-label">#83c092</div><div class="swatch-name">aqua</div></div>
+  <div class="swatch-group"><div class="swatch" style="background:#7fbbb3"></div><div class="swatch-label">#7fbbb3</div><div class="swatch-name">blue</div></div>
+  <div class="swatch-group"><div class="swatch" style="background:#dbbc7f"></div><div class="swatch-label">#dbbc7f</div><div class="swatch-name">yellow</div></div>
+  <div class="swatch-group"><div class="swatch" style="background:#e69875"></div><div class="swatch-label">#e69875</div><div class="swatch-name">orange</div></div>
+  <div class="swatch-group"><div class="swatch" style="background:#e67e80"></div><div class="swatch-label">#e67e80</div><div class="swatch-name">red</div></div>
+  <div class="swatch-group"><div class="swatch" style="background:#d699b6"></div><div class="swatch-label">#d699b6</div><div class="swatch-name">purple</div></div>
+</div>
+
+<!-- ============ DESKTOP ============ -->
+<p class="section-title">desktop — niri + waybar + mako</p>
+
+<div class="desktop">
+  <div class="desktop-wallpaper"></div>
+
+  <!-- Waybar -->
+  <div class="waybar">
+    <div class="waybar-group waybar-left">
+      <span class="workspace-dot"></span>
+      <span class="workspace-dot active"></span>
+      <span class="workspace-dot"></span>
+      <span class="workspace-dot"></span>
+      <span class="workspace-dot"></span>
+    </div>
+    <div class="waybar-group">
+      <span style="color:#a7c080"> Nujabes - Aruarian Dance</span>
+      <span style="font-weight:500;margin-left:8px">Thu 03 Apr  14:32</span>
+    </div>
+    <div class="waybar-group">
+      <span style="color:#dbbc7f">22C</span>
+      <span style="color:#7fbbb3">12%</span>
+      <span style="color:#83c092">4.2G</span>
+      <span style="color:#7fbbb3">86%</span>
+      <span style="color:#7fbbb3"></span>
+      <span style="color:#a7c080">72%</span>
+      <span style="color:#a7c080">98%</span>
+      <span style="color:#e67e80;font-size:15px"></span>
+    </div>
+  </div>
+
+  <!-- Notification -->
+  <div class="notification">
+    <div class="notif-title" style="color:#83c092">nixos-rebuild</div>
+    <div class="notif-body">switch completed successfully in 42s</div>
+  </div>
+
+  <!-- Terminal (focused — green border gradient) -->
+  <div class="terminal">
+    <div class="terminal-titlebar">
+      <div class="terminal-dots">
+        <span class="terminal-dot" style="background:#e67e80"></span>
+        <span class="terminal-dot" style="background:#dbbc7f"></span>
+        <span class="terminal-dot" style="background:#a7c080"></span>
+      </div>
+      <span>ghostty ~ dotfiles</span>
+    </div>
+    <div class="terminal-body">
+      <div><span style="color:#a7c080">></span> <span style="color:#7fbbb3">git</span> <span style="color:#83c092">log</span> <span style="color:#e69875">--oneline</span> <span style="color:#dbbc7f">-5</span></div>
+      <div><span style="color:#e69875">c3957c0</span> <span style="color:#d3c6aa">chore: claude - zellij - ra-lsp - git aliases</span></div>
+      <div><span style="color:#e69875">d4b051a</span> <span style="color:#d3c6aa">chore: gnome + ghostty settings</span></div>
+      <div><span style="color:#e69875">a675681</span> <span style="color:#d3c6aa">chore: change eza + zsh aliases</span></div>
+      <div style="margin-top:6px"><span style="color:#a7c080">></span> <span style="color:#7fbbb3">nix</span> <span style="color:#83c092">build</span> <span style="color:#d699b6">.#nixosConfigurations</span><span style="color:#475258">.</span><span style="color:#d3c6aa">rewot</span></div>
+      <div><span style="color:#7a8478">  building '/nix/store/...-nixos-system-rewot'</span></div>
+      <div><span style="color:#a7c080">></span> <span style="color:#7a8478">|</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FUZZEL ============ -->
+<p class="section-title">fuzzel launcher</p>
+
+<div class="desktop" style="max-width:900px;margin:0 auto 50px">
+  <div class="desktop-wallpaper"></div>
+  <div class="fuzzel-overlay">
+    <div class="fuzzel">
+      <div class="fuzzel-input">
+        <span class="prompt"> </span>
+        <span>fire</span><span style="animation: blink 1s infinite">|</span>
+      </div>
+      <div class="fuzzel-item selected"><span class="match">Fire</span>fox</div>
+      <div class="fuzzel-item"><span class="match">fire</span>wall-cmd</div>
+      <div class="fuzzel-item"><span class="match">Fire</span>fox Developer Edition</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ LOCKSCREEN ============ -->
+<p class="section-title">hyprlock lockscreen</p>
+
+<div class="lockscreen-wrap">
+  <div class="lockscreen">
+    <div class="desktop-wallpaper" style="filter:blur(8px) brightness(0.55);transform:scale(1.05)"></div>
+    <div class="lock-content">
+      <div class="lock-time">14:32</div>
+      <div class="lock-date">THURSDAY, 03 APRIL</div>
+      <div class="lock-avatar">🐸</div>
+      <div class="lock-user">matei@rewot-smibmuhb</div>
+      <div class="lock-input">* * * *</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CHANGES ============ -->
+<div class="changes">
+  <h2>Files Changed</h2>
+  <div class="change-item">
+    <span class="change-file"><span class="tag tag-color">COLOR</span> ghostty/config</span>
+    <span class="change-desc">Duskfox -> Everforest Dark Hard</span>
+  </div>
+  <div class="change-item">
+    <span class="change-file"><span class="tag tag-new">WALL</span> pkgs/desktop/default.nix</span>
+    <span class="change-desc">Wallpaper -> wallhaven-5gym13.jpg</span>
+  </div>
+  <div class="change-item">
+    <span class="change-file"><span class="tag tag-color">COLOR</span> pkgs/desktop/niri.kdl</span>
+    <span class="change-desc">Focus ring & border: teal -> sage/aqua gradient, shadow color updated</span>
+  </div>
+  <div class="change-item">
+    <span class="change-file"><span class="tag tag-color">COLOR</span><span class="tag tag-config">CFG</span> waybar/config.jsonc</span>
+    <span class="change-desc">Removed temperature & backlight modules</span>
+  </div>
+  <div class="change-item">
+    <span class="change-file"><span class="tag tag-color">COLOR</span> waybar/style.css</span>
+    <span class="change-desc">Full Everforest recolor + opacity 0.85 for panels</span>
+  </div>
+  <div class="change-item">
+    <span class="change-file"><span class="tag tag-color">COLOR</span> pkgs/desktop/mako.conf</span>
+    <span class="change-desc">Notification colors: all Everforest</span>
+  </div>
+  <div class="change-item">
+    <span class="change-file"><span class="tag tag-color">COLOR</span> pkgs/desktop/fuzzel.ini</span>
+    <span class="change-desc">Launcher colors: all Everforest</span>
+  </div>
+  <div class="change-item">
+    <span class="change-file"><span class="tag tag-color">COLOR</span> pkgs/desktop/hyprlock.conf</span>
+    <span class="change-desc">Lock screen: all Everforest (ring, input, text, labels)</span>
+  </div>
+  <div class="change-item">
+    <span class="change-file"><span class="tag tag-color">COLOR</span> pkgs/desktop/swaylock.conf</span>
+    <span class="change-desc">Lock screen fallback: all Everforest</span>
+  </div>
+  <div class="change-item">
+    <span class="change-file"><span class="tag tag-color">COLOR</span> pkgs/desktop/gtklock/style.css</span>
+    <span class="change-desc">GTK lock screen: all Everforest</span>
+  </div>
+</div>
+
+<p style="text-align:center;color:#475258;font-size:11px;padding:30px 0;letter-spacing:1px">
+  everforest theme preview — generated by claude
+</p>
+
+</body>
+</html>

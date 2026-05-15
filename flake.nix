@@ -34,11 +34,17 @@
     };
     # hardware for t480
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     {
       baan,
+      disko,
       helix,
       home-manager,
       neovim-nightly,
@@ -56,6 +62,8 @@
           # and then in home-manager we can consume it with inputs.helix.packages.${pkgs.system}.helix
 
           modules = [
+            disko.nixosModules.disko
+            ./disko.nix
             # Import previous configuration.nix file
             ./system
             nixos-hardware.nixosModules.lenovo-thinkpad-t480

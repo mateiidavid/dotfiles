@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Option D — Compact Stack (hyprlock)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 100vw; height: 100vh;
+    background: url('../share/images/wallhaven-lmzrx2.png') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rubik', sans-serif;
+    color: #d0dce0;
+    overflow: hidden;
+  }
+
+  /* Blur + darken */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: inherit;
+    filter: blur(14px) brightness(0.55);
+    transform: scale(1.06);
+    z-index: 0;
+  }
+
+  /* Vignette */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.5) 100%);
+    z-index: 1;
+  }
+
+  .lockscreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+  }
+
+  /* ---- Keroro avatar (hyprlock: image widget) ---- */
+  .avatar {
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 6px;
+    border: 4px solid #2e4548;
+    box-shadow:
+      0 4px 40px rgba(0,0,0,0.5),
+      0 0 0 1px rgba(90,173,168,0.15);
+  }
+
+  .avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+
+  /* ---- Hostname (hyprlock: label widget) ---- */
+  .hostname {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+
+  .hostname .prompt { color: #408a70; }
+  .hostname .user { color: #5aada8; }
+  .hostname .at { color: #2e4548; }
+  .hostname .host { color: #5888b0; }
+  .hostname .tilde { color: rgba(208,220,224,0.4); }
+
+  /* ---- Clock (hyprlock: label widget) ---- */
+  .clock {
+    font-size: 42px;
+    font-weight: 300;
+    letter-spacing: -1px;
+    color: #d0dce0;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    margin-bottom: 4px;
+  }
+
+  /* ---- Date (hyprlock: label widget) ---- */
+  .date {
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(208,220,224,0.45);
+    margin-bottom: 28px;
+  }
+
+  /* ---- Input field (hyprlock: input-field widget) ---- */
+  .input-wrapper {
+    width: 280px;
+    height: 44px;
+    border-radius: 22px;
+    border: 1px solid #2e4548;
+    background: rgba(20, 28, 31, 0.5);
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
+    gap: 8px;
+  }
+
+  .input-wrapper:focus-within {
+    border-color: #5aada8;
+    box-shadow: 0 0 20px rgba(90,173,168,0.1);
+  }
+
+  .input-dots {
+    display: flex;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .input-dots .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #5aada8;
+  }
+
+  .input-placeholder {
+    font-size: 12px;
+    color: rgba(208,220,224,0.2);
+    letter-spacing: 1px;
+  }
+
+  /* ---- Note ---- */
+  .note {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    background: rgba(30,45,48,0.9);
+    border: 1px solid #2e4548;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 11px;
+    color: rgba(208,220,224,0.6);
+    max-width: 320px;
+    line-height: 1.6;
+  }
+  .note strong { color: #5aada8; }
+</style>
+</head>
+<body>
+  <div class="lockscreen">
+    <div class="avatar">
+      <img src="../share/images/keroro.jpg" alt="keroro">
+    </div>
+
+    <div class="hostname">
+      <span class="prompt">&#x276F;</span>
+      <span class="user">matei</span><span class="at">@</span><span class="host">rewot-smibmuhb</span>
+      <span class="tilde">~</span>
+    </div>
+
+    <div class="clock">21:37</div>
+    <div class="date">Thursday, 02 April</div>
+
+    <div class="input-wrapper">
+      <div class="input-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Option D — Compact Stack</strong><br>
+    Faithful recreation of Option B using <strong>hyprlock</strong>.<br><br>
+    <strong>Layout:</strong> Keroro circle &rarr; hostname &rarr; clock &rarr; date &rarr; pill-shaped input.<br>
+    Each element is an independent hyprlock widget, freely positioned.<br><br>
+    <strong>hyprlock widgets:</strong><br>
+    &bull; <strong>image</strong> &mdash; keroro.jpg, circular crop, border<br>
+    &bull; <strong>label</strong> &times;3 &mdash; hostname, clock ($TIME), date ($TIME formatted)<br>
+    &bull; <strong>input-field</strong> &mdash; pill shape, dots on typing<br>
+    &bull; <strong>background</strong> &mdash; wallpaper with blur + vignette
+  </div>
+</body>
+</html>
